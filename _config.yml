@@ -19,7 +19,7 @@ locale                   : "en-US"
 title                    : "LSM107"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "LSM"
+name                     : "임승민"
 description              : "현재 NN 정형검증에 대한 공부를 하고 있습니다."
 url                      : "https://LSM107.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
@@ -104,11 +104,11 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
+  name             : "임승민"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
-  location         : "Somewhere"
-  email            :
+  bio              : "현재 NN 정형검증에 대해 공부하고 있습니다."
+  location         : "서울시립대학교"
+  email            : "rsm1021902@gmail.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
