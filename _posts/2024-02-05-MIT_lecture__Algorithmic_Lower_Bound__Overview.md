@@ -25,7 +25,7 @@ sidebar:
 
 이 수업에서는 형식적으로 어려운, 다루기 힘든 계산 문제를 증명하기 위한 실용적인 가이드를 제공합니다.
 
-https://www.youtube.com/watch?v=7d73E1DiH0w&list=PLUl4u3cNGP63d33STUUBfZUpzFCVR5-PV&index=1
+<https://www.youtube.com/watch?v=7d73E1DiH0w&list=PLUl4u3cNGP63d33STUUBfZUpzFCVR5-PV&index=1>
 
 
 
