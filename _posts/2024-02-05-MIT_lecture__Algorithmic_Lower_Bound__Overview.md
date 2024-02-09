@@ -23,9 +23,9 @@ sidebar:
 
 ## 소개
 
-이 수업에서는 형식적으로 어려운, 다루기 힘든 계산 문제를 증명하기 위한 실용적인 가이드를 제공합니다.
+이 수업에서는 형식적으로 어려운, 다루기 힘든 계산 문제를 증명하기 위한 실용적인 가이드를 제공합니다. SAT를 다루는 국내 강의가 없어서, 외국 강의들 중에서 이걸로 선택해서 듣기로 결정했습니다. 영상은 아래 링크를 통해 확인할 수 있습니다.
 
-<https://www.youtube.com/watch?v=7d73E1DiH0w&list=PLUl4u3cNGP63d33STUUBfZUpzFCVR5-PV&index=1>
+- <https://www.youtube.com/watch?v=7d73E1DiH0w&list=PLUl4u3cNGP63d33STUUBfZUpzFCVR5-PV&index=1>
 
 
 
