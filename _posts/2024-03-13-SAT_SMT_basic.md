@@ -108,7 +108,7 @@ SAT 해결을 이해하기 전에, 핵심 개념인 **명제 논리 공식**에 
 
 예시 02.
 
-- **공식:** $\neg ((p \land q )\rarr (p \lor r))$
+- **공식:** $\neg ((p \land q ) \rightarrow (p \lor r))$
 
 ![image-20240313172158611](/images/2024-03-13-SAT_SMT_basic/image-20240313172158611.png)
 
