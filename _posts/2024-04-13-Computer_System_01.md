@@ -9,6 +9,7 @@ tag: [Computer, System]
 
 typora-root-url: ../
 
+toc: true
 
 author_profile: false
 
