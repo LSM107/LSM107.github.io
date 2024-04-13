@@ -22,7 +22,7 @@ use_math: true
 
 
 
-#### 글에 들어가기 앞서
+**글에 들어가기 앞서...**
 
 이 포스팅은 Coursera 강의, '**Automated Reasoning: Satisfiablity**'에 대한 정리입니다. 이 Coursera 강의는 총 4주차로 구성되어있습니다. 강의 구성에 맞춰 포스팅도 한 주차에 한 개씩, 총 4개의 포스팅을 작성할 계획입니다.
 
