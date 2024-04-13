@@ -345,7 +345,9 @@ void getstuff() {
 
 #### **Isomorphic Group to** **unsigneds** **with** **UAdd**
 
-$$ TAdd_w(u, v) = U2T(UAdd_w(T2U(u), T2U(v))) $$
+$$
+TAdd_w(u, v) = U2T(UAdd_w(T2U(u), T2U(v)))
+$$
 
 위 식이 성립하는 이유는 명백합니다. 사실, T2U와 U2T는 단지 이 도메인의 비트가 어떻게 해석되는지를 나타내는 것일 뿐입니다. 실제 연산은 비트 수준에서 이루어지며, 비트를 어떻게 해석하든 그 연산 결과에 영향을 주지 않습니다.
 
