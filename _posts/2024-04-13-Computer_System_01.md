@@ -130,13 +130,13 @@ $$
 
 
 
-![image-20240413172714486](/images/2024-04-13-Computer_System_01/image-20240413172714486.png)
+<img src="/images/2024-04-13-Computer_System_01/image-20240413172714486.png" alt="image-20240413172714486" style="zoom:50%;" />
 
 예를 들어, 4비트로 표현된 정수에서 "-7"은 부호 있는 정수로서 "1001"로 표현됩니다. 이 비트 패턴을 부호 없는 정수 도메인에서 해석하면, "9"로 해석됩니다. 즉, T2U 연산은 이러한 변환에서 "1001"이라는 비트 패턴이 부호 없는 정수 도메인에서 "9"로 해석된다는 사실을 묻는 것입니다. 이 과정에서 '**동일한 비트 패턴이 유지된다**'는 표현은, 변환 과정에서 비트 패턴 자체에 변화가 없음을 강조하는 것입니다.
 
 
 
-![image-20240413193022026](/images/2024-04-13-Computer_System_01/image-20240413193022026.png)
+<img src="/images/2024-04-13-Computer_System_01/image-20240413193022026.png" alt="image-20240413193022026" style="zoom:50%;" />
 
 부호 없는 정수(Unsigned Integer) 도메인에서 숫자의 부호를 바꾸기 위한 방법 중 하나는 비트 단위 부정(Bit-wise Negation) 연산을 수행한 후 1을 더하는 것입니다. 이 방식은 컴퓨터 과학에서 '2의 보수(Two's Complement)'라고 알려져 있으며, 정수의 부호를 변경하는 표준적인 방법입니다. **이러한 설계의 근본적인 이유는, 절대값이 동일하지만 부호가 반대인 두 수를 더했을 때 결과값으로 0을 얻기를 원하기 때문입니다.**
 
@@ -198,13 +198,13 @@ uy = (unsigned) ty;
 
 ### Addition
 
-![image-20240413214519737](/images/2024-04-13-Computer_System_01/image-20240413214519737.png)
+<img src="/images/2024-04-13-Computer_System_01/image-20240413214519737.png" alt="image-20240413214519737" style="zoom:50%;" />
 
 비트로 표현되는 정수 간의 덧셈에서 주목할 만한 특징 중 하나는, 캐리(carry)를 고려하지 않는다는 점입니다. **이는 덧셈 연산에서 변수의 표현 범위를 넘어설 때 발생하는 현상, 즉 오버플로우(overflow) 때문입니다.** 산술적으로 설명하자면, 예를 들어 4비트로 표현되는 부호 없는(unsigned) 정수형 변수가 있다고 가정할 때, 두 변수의 합이 2의 4승, 즉 16을 초과하게 되면, 결과값은 16으로 나눈 나머지 값을 가지게 됩니다. 이는 합산 결과가 해당 변수가 표현할 수 있는 최대 범위를 넘어섰을 때, **초과분(carry)을 고려하지 않고 버려지는 것을 의미합니다.**
 
 
 
-![image-20240413214547962](/images/2024-04-13-Computer_System_01/image-20240413214547962.png)
+<img src="/images/2024-04-13-Computer_System_01/image-20240413214547962.png" alt="image-20240413214547962" style="zoom:50%;" />
 
 이러한 오버플로우 현상은 부호 없는 정수형(unsigned integer)에서만 발생하는 것이 아니라, 부호 있는(signed) 정수형에서도 마찬가지로 발생합니다. **물론 부호 있는 정수에서의 오버플로우는 범위가 다르게 나타나지만, 근본적인 원리는 동일합니다.** 즉, 덧셈 결과가 해당 정수형 변수가 표현할 수 있는 범위를 넘어서는 경우, 이를 고려하지 않고 초과분을 버리게 되는 것입니다. 이러한 오버플로우는 컴퓨터가 한정된 비트 수로 숫자를 표현하고 연산을 수행하는 과정에서 불가피하게 발생하는 현상입니다.
 
@@ -230,7 +230,7 @@ for (i = cnt-2; i >= 0; i--)
 
 
 
-![undefined](/images/2024-04-13-Computer_System_01/1920px-Virtual_address_space_and_physical_address_space_relationship.svg.png)
+<img src="/images/2024-04-13-Computer_System_01/1920px-Virtual_address_space_and_physical_address_space_relationship.svg.png" alt="undefined" style="zoom:33%;" />
 
 <https://en.wikipedia.org/wiki/Physical_address#/media/File:Virtual_address_space_and_physical_address_space_relationship.svg>
 
@@ -260,7 +260,7 @@ Little Endian 방식을 사용하는 주된 이유는 연산의 효율성에 있
 
 
 
-![image-20240413222426770](/images/2024-04-13-Computer_System_01/image-20240413222426770.png)
+<img src="/images/2024-04-13-Computer_System_01/image-20240413222426770.png" alt="image-20240413222426770" style="zoom:50%;" />
 
 실제로 Little Endian과 Big Endian 사이의 변환 방법은 복잡하지 않습니다. 핵심은 데이터를 저장하는 바이트 순서를 반대로 뒤집는 것에 있습니다. 즉, 데이터를 저장할 때 적용했던 순서를 역순으로 조정함으로써, 한 방식에서 다른 방식으로의 전환을 달성할 수 있습니다. 이 간단한 원리를 통해 서로 다른 아키텍처를 사용하는 시스템 간의 호환성을 보장할 수 있습니다.
 
