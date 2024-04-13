@@ -232,7 +232,7 @@ for (i = cnt-2; i >= 0; i--)
 
 ![undefined](/images/2024-04-13-Computer_System_note/1920px-Virtual_address_space_and_physical_address_space_relationship.svg.png)
 
-그림 출처:< https://en.wikipedia.org/wiki/Physical_address#/media/File:Virtual_address_space_and_physical_address_space_relationship.svg>
+<https://en.wikipedia.org/wiki/Physical_address#/media/File:Virtual_address_space_and_physical_address_space_relationship.svg>
 
 여기서 우리가 주로 다룰 '주소' 개념은 private address, 즉 개인 주소(논리 주소 또는 가상 주소)입니다. private address는 실제 물리적인 메모리 주소와는 독립적으로 정의된 추상적인 공간을 의미합니다. 이러한 추상화를 통해, 우리는 프로세스의 명령어들이 메모리에 어떻게 할당되는지를 보다 쉽게 이해할 수 있습니다. 실제 물리적인 메모리 주소에 대한 할당 작업은 운영체제의 책임하에 이루어집니다.
 
