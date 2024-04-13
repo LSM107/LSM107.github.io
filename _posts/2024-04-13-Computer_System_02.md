@@ -1,7 +1,7 @@
 ---
 layout: single
 
-title:  "컴퓨터시스템 01: 포인터"
+title:  "컴퓨터시스템 02: 포인터"
 
 categories: Paper
 
