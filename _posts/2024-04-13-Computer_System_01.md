@@ -148,7 +148,7 @@ $$
 
 #### C언어 예시
 
-```C
+```
 4258405349U;
 4258405349;
 0U;
@@ -167,7 +167,7 @@ $$
 
 
 
-```c
+```
 int tx, ty;
 unsigned ux, uy;
 tx = (int) ux;
@@ -212,7 +212,7 @@ uy = (unsigned) ty;
 
 #### 예시 01(Unsigned 변수를 쓸 때의 주의사항)
 
-```C
+```
 unsigned i;
 for (i = cnt-2; i >= 0; i--)
   a[i] += a[i+1];
@@ -270,7 +270,7 @@ Little Endian 방식을 사용하는 주된 이유는 연산의 효율성에 있
 
 #### C언어 예시
 
-```C
+```
 typedef unsigned char *pointer;
 
 void show_bytes(pointer start, size_t len){
@@ -295,7 +295,7 @@ void show_bytes(pointer start, size_t len){
 
 ### Code Security Example
 
-```C
+```
 /* Kernel memory region holding user-accessible data */
 #define KSIZE 1024
 char kbuf[KSIZE];
@@ -309,7 +309,7 @@ int copy_from_kernel(void *user_dest, int maxlen) {
 }
 ```
 
-```C
+```
 #define MSIZE 528
 
 void getstuff() {
@@ -357,7 +357,7 @@ $$
 
 #### 예시 01(곱셈)
 
-```C
+```
 long mul12(long x)
 {
   return x*12;
@@ -368,7 +368,7 @@ long mul12(long x)
 
 
 
-```assembly
+```
 leaq (%rax, %rax, 2), %rax
 salq $2, %rax
 ```
@@ -381,7 +381,7 @@ salq $2, %rax
 
 #### 예시 02(나눗셈)
 
-```C
+```
 unsigned long udiv8
       (unsigned long x)
 {
@@ -393,7 +393,7 @@ unsigned long udiv8
 
 
 
-```assembly
+```
 shrq $3 %rax
 ```
 
@@ -425,7 +425,7 @@ C언어에서 음수를 8로 나누는 코드를 어셈블리 언어로 변환�
 
 
 
-```C
+```
 long idiv8(long x)
 {
   return x / 8;
@@ -436,7 +436,7 @@ long idiv8(long x)
 
 
 
-```assembly
+```
 	testq %rax, %rax
 	js	L4
 L3:
