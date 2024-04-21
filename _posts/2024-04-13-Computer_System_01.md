@@ -3,7 +3,7 @@ layout: single
 
 title:  "컴퓨터시스템 01: 비트와 바이트, 그리고 정수"
 
-categories: Computer System
+categories: Computer_System
 
 tag: [Computer, System]
 

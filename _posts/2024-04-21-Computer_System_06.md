@@ -3,7 +3,7 @@ layout: single
 
 title:  "컴퓨터시스템 03: 기계 수준 프로그래밍 4: 데이터"
 
-categories: Computer System
+categories: Computer_System
 
 tag: [Computer, System, Assembly]
 
