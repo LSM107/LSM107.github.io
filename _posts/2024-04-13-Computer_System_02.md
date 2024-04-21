@@ -3,7 +3,7 @@ layout: single
 
 title:  "컴퓨터시스템 02: 포인터"
 
-categories: Paper
+categories: Computer System
 
 tag: [Computer, System, Pointer]
 

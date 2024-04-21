@@ -3,7 +3,7 @@ layout: single
 
 title:  "컴퓨터시스템 03: 기계 수준 프로그래밍 2: 제어문"
 
-categories: Paper
+categories: Computer System
 
 tag: [Computer, System, Assembly]
 
