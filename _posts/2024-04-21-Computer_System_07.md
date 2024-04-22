@@ -1,7 +1,7 @@
 ---
 layout: single
 
-title:  "컴퓨터시스템 03: 기계 수준 프로그래밍 5: 메모리 배치"
+title:  "컴퓨터시스템 07: 기계 수준 프로그래밍 5: 메모리 배치"
 
 categories: Computer_System
 
