@@ -1,7 +1,7 @@
 ---
 layout: single
 
-title:  "컴퓨터시스템 0: 기계 수준 프로그래밍 4: 데이터"
+title:  "컴퓨터시스템 06: 기계 수준 프로그래밍 4: 데이터"
 
 categories: Computer_System
 
