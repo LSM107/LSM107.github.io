@@ -28,9 +28,7 @@ use_math: true
 
 
 
-논문 원본은 아래의 링크를 통해 확인할 수 있습니다.
-
-- <https://dl.acm.org/doi/pdf/10.1145/3368089.3409668>
+출처: <https://dl.acm.org/doi/pdf/10.1145/3368089.3409668>
 
 
 
