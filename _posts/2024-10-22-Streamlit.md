@@ -236,7 +236,7 @@ for i in range(0, len(st.session_state.players), 3):
 
 
 
-![image-20241019160532865](/images/2024-10-22-Streamlit/image-20241019160532865.png)
+<img src="/images/2024-10-22-Streamlit/image-20241019160532865.png" alt="image-20241019160532865" style="zoom:50%;" />
 
 
 
@@ -261,3 +261,51 @@ st.markdown("""
 CSS 코드를 적용하기 위해서는 `markdown`함수를 사용합니다. 위의 코드가 CSS 코드를 적용하기 위한 기본 형식입니다. html style 태그 사이에 우리가 변경하고자 하는 디자인 요소를 설정합니다.
 
 디자인 요소를 변경할 때에는 개발자 도구를 켜서 우리가 바꾸고 싶은 요소가 html상에서 어떤 클래스로 지정돼있는지 확인합니다.
+
+
+
+
+
+### 제목 변경
+
+<img src="/images/2024-10-22-Streamlit/image-20241019162845587.png" alt="image-20241019162845587" style="zoom:50%;" />
+
+제목의 디자인을 바꾸기 위해 커서를 올려놓은 상태에서 우클릭, 그리고 검사를 선택합니다. 그러면 위와 같은 개발자 도구로 연결되는데요, 위의 html 코드를 보면 Football Players라는 제목이 `h1`태그 밑에 정의되어 있는게 확인됩니다.
+
+
+
+```python
+st.markdown("""
+<style>
+h1 {
+	color: red;
+}
+</style>
+""", unsafe_allow_html=True)
+```
+
+위와 같이 CSS 코드를 작성하고 적용하면, 제목이 빨간색으로 설정됩니다.
+
+
+
+![image-20241019163315583](/images/2024-10-22-Streamlit/image-20241019163315583.png)
+
+
+
+### 이미지
+
+웹에 나타나는 이미지는 `img`태그를 달고 있습니다. 이미지의 크기를 일괄적으로 맞추고 싶다면, `img`태그를 지정해 변경할 수 있습니다.
+
+
+
+```python
+st.markdown("""
+<style>
+img {
+	max-height: 300px;
+}
+</style>
+""", unsafe_allow_html=True)
+```
+
+그런데, 이 CSS 코드를 사용해 이미지의 디자인을 바꾸면 페이지 간에 이동을 할 때 딜레이, CSS 코드 적용 이전의 이미지 형태가 잠깐 나타났다가 적용 이후로 바뀌는 문제가 발생한다는 문제점이 발생합니다. 따라서 이미지에 대해 CSS 코드를 적용할 때에 별도의 눈속임 장치를 고려할 필요가 있습니다.
