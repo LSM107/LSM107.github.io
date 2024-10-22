@@ -53,7 +53,7 @@ use_math: true
 
 ## Streamlit 개발 환경 설정
 
-<img src="images/2024-10-19-Streamlit/image-20241019130235602.png" alt="image-20241019130235602" style="zoom:50%;" />
+<img src="images/2024-10-22-Streamlit/image-20241019130235602.png" alt="image-20241019130235602" style="zoom:50%;" />
 
  `app.py`라는 파이썬 파일을 생성하고, 해당 파일 내에 위와 같이 입력합니다. `set_page_config`는 페이지 탭의 이름과 그림 등을 설정하는 함수입니다.
 
@@ -65,7 +65,7 @@ streamlit run app.py
 
 
 
-<img src="/images/2024-10-19-Streamlit/image-20241019130940184.png" alt="image-20241019130940184" style="zoom:50%;" />
+<img src="/images/2024-10-22-Streamlit/image-20241019130940184.png" alt="image-20241019130940184" style="zoom:50%;" />
 
 
 
