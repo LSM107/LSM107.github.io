@@ -314,6 +314,31 @@ img {
 
 
 
+### 버튼 비활성화
+
+
+
+Expander를 사용해 선수를 나열하도록 만들었기 때문에, Expander의 기본적인 기능들이 자동으로 구현되어 있습니다. 그 중 하나가 요소를 접을 수 있는 기능입니다. html 코드를 살펴보면 `data-testid="stExpanderToggleIcon"`으로 정의된 것이 확인됩니다. 이 정보를 활용해 버튼을 비활성화시키는 CSS 코드를 작성합니다.
+
+![image-20241019164322722](/images/2024-10-22-Streamlit/image-20241019164322722.png)
+
+```python
+st.markdown("""
+<style>
+[data-testid="stExpanderToggleIcon"] {
+	visibility: hidden;
+}
+</style>
+""", unsafe_allow_html=True)
+
+```
+
+정리하면, 바꾸고자 하는 대상의 **클래스**, 또는 **data-testid**를 **검사**를 통해 확인하고 이를 변경하기 위한 CSS 코드를 **markdown** 함수의 인자로 적어내 실행하면 CSS 코드 내용이 반영됩니다.
+
+
+
+
+
 
 
 ## Tailwind CSS 적용
@@ -328,46 +353,9 @@ Tailwind CSS는 미리 다양한 디자인으로 만들어진 클래스를 사�
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-
-<body class="bg-gray-100 p-8">
-    <div class="shadow-lg rounded-lg overflow-hidden">
-    <div class="py-3 px-5 bg-gray-50">Doughnut chart</div>
-    <canvas class="p-10" id="chartDoughnut"></canvas>
-    </div>
-
-    <!-- Required chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Chart doughnut -->
-    <script>
-    const dataDoughnut = {{
-        labels: ["JavaScript", "Python", "Ruby"],
-        datasets: [
-        {{
-            label: "My First Dataset",
-            data: {data_json},
-            backgroundColor: [
-            "rgb(133, 105, 241)",
-            "rgb(164, 101, 241)",
-            "rgb(101, 143, 241)",
-            ],
-            hoverOffset: 4,
-        }},
-        ],
-    }};
-
-    const configDoughnut = {{
-        type: "doughnut",
-        data: dataDoughnut,
-        options: {{}},
-    }};
-
-    var chartBar = new Chart(
-        document.getElementById("chartDoughnut"),
-        configDoughnut
-    );
-    </script>
-</body>
 ```
 
-위 CSS 코드는 Tailwind CSS에서 정의된 클래스를 사용해 쉽고 간편하게 도넛형 그래프를 화면에 표현해주는 코드입니다.
+Tailwind CSS를 사용하기 위해서는 위와 같이 head 부분에 `<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">`를 추가해야 합니다. 이 코드가 추가되면 Tailwind CSS에서 제공하는 다양한 클래스 편의기능을 사용할 수 있습니다. body에서 사용된 클래스들은 모두 다 Tailwind CSS의 클래스들인데요, Streamlit을 돌렸을 때에도 잘 적용되는 것을 확인할 수 있습니다.
+
+
+
