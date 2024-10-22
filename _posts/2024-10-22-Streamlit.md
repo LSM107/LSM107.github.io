@@ -55,5 +55,182 @@ use_math: true
 
 <img src="/images/2024-10-22-Streamlit/image-20241019130235602.png" alt="image-20241019130235602" style="zoom:50%;" />
 
+ `app.py`라는 파이썬 파일을 생성하고, 해당 파일 내에 위와 같이 입력합니다. `set_page_config`는 페이지 탭의 이름과 그림 등을 설정하는 함수입니다.
 
+`app.py`를 실행시키면, 아래의 창이 생성되는 것을 확인할 수 있습니다. `app.py`에 적은 내용들을 화면에 출력할 때에는 아래의 명령어를 터미널에 입력합니다.
+
+```
+streamlit run app.py
+```
+
+
+
+<img src="/images/2024-10-22-Streamlit/image-20241019130940184.png" alt="image-20241019130940184" style="zoom:50%;" />
+
+
+
+
+
+
+
+## Streamlit Widget
+
+- **Streamlit Widget** 공식 문서: <https://docs.streamlit.io/develop/api-reference/widgets>
+
+
+
+**Streamlit**의 공식 문서 사이트를 들어가보면, 사이트를 장식할 수 있는 다양한 기능들을 확인할 수 있습니다. 소개된 기능들이 구현된 코드를 살펴보겠습니다.
+
+```python
+import streamlit as st
+
+print("page reloaded")
+st.set_page_config(
+    page_title="football agent")
+
+st.title("Football Players")
+st.markdown("**축구선수**에 대한 정보를 직접 추가하고 수정할 수 있습니다.")
+
+type_emoji_dict = {
+    "GK": "🧤",
+
+    "DF": "🛡️",
+    "CB": "🛡️",
+    "SW": "🛡️",
+    "FB": "🛡️",
+    "LB": "🛡️",
+    "RB": "🛡️",
+    "WB": "🛡️",
+    "LWB": "🛡️",
+    "RWB": "🛡️",
+
+    "MF": "⚽",
+    "CM": "⚽",
+    "DM": "⚽",
+    "AM": "⚽",
+    "LM": "⚽",
+    "RM": "⚽",
+    "LW": "⚽",
+    "RW": "⚽",
+
+    "FW": "🗡️",
+    "CF": "🗡️",
+    "SS": "🗡️",
+    "LW": "🗡️",
+    "RW": "🗡️",
+    "F9": "🗡️"
+    
+}
+
+initial_players = [
+    {
+        "name": "Lionel Messi",
+        "type": ["FW", "CF", "SS"],
+        "image_url": "https://i.namu.wiki/i/WrefVOGncDZ3Lw81dS9p5P6eAMcCAZr2_BL1VEO8xzodFcF9bcznNvg0U7j7Xx1d4D5ovzvkmaZYEO95PWlqFYCCi-XkTjeG0ZKQz-5SfUAkvA3c36xPqwjU78BftdQtd6xO873LgjSgaV14MyQHDw.webp"
+
+    },
+
+    {
+        "name": "Cristiano Ronaldo",
+        "type": ["FW", "CF", "SS"],
+        "image_url": "https://i.namu.wiki/i/EaJDRxRUqWSVBwK2ZpVXmpEs_-M89y4roCm-MfzOJ4N4QHlXRJISpvr0xFazHzGEB-AnaDQQnwCUXW0kmE-aSxZzbfTmB7t8OMIurvx91VhKiPOGfO_4qExb1bVkFPzg03mdgbXcyxD_MXmhhd2Dow.webp"
+    },
+
+    {
+        "name": "Neymar Jr.",
+        "type": ["FW", "CF", "SS", "LW"],
+        "image_url": "https://i.namu.wiki/i/eXbUi0xjfgSxq5zrbo5DXi7QfPfI1_ugB2xu-O0vVlcfqrQJ_h6BvdkzbIDRDeQ-G72QtuRBMO2CD7RO000nqgmc4m1HFGZbTtPcSx1qqlsjAtaYAtcmekHuO6uHwM3DrOlgtDEneCUocmVOOqa7jw.webp"
+    },
+
+    {
+        "name": "Kylian Mbappé",
+        "type": ["FW", "CF", "SS", "LW"],
+        "image_url": "https://i.namu.wiki/i/ZepWQsT5z4gS5QPHfWivdn6CNjfkVVd_9G_F3N5bYwBfXwhhHlkx8wAiZ7O7xyoHsVGaBTWv3KIHvnUR_9qFKWHrND7L8OmrSR2TE7pT6aIKl1LKncFBol62CmUT9D9jinjqbDlrHUiEONt5zZlbKg.webp"
+    },
+
+    {
+        "name": "Robert Lewandowski",
+        "type": ["FW", "CF", "SS"],
+        "image_url": "https://i.namu.wiki/i/TWTBfovDxIfqZB3i1XUPjaAlm-UdjxiFcYWZmGtNii7ZPVA8M73_m90ZPWHnJm0ZhRWfgxcMXTTuqUYFMiLyNYIp3D5lvxsvRtKvv52BMaQCYrmVpGAn_yx-M48xI4CT2JeNmLKn0MKM3HjHDrDteQ.webp"
+    },
+
+    {
+        "name": "Kevin De Bruyne",
+        "type": ["MF", "CM", "DM", "AM"],
+        "image_url": "https://i.namu.wiki/i/Jye-vHg14en0q3oe0AUw-ZXzLbj_ZGr83EzxpnQlRV5mcZKBimeNvWRPGm08z_Z6bHfOxzOGrAcUROcHL3LHvletzLe2s5jnqHDu9H4QoDubxKNydUWHRN3tn95aHljPZqvauZtyNKZVSg3yChuTUw.webp"
+    },
+]
+
+example_player = {
+    "name": "ronaldiho",
+    "type": ["FW", "CF", "SS"],
+    "image_url": "https://i.namu.wiki/i/0eqIdYexQd3BPqs2UIhyvQSVZLgdEELrTRo_cUFL6QB-d6kjnQUsp4qme4w6gly2LMBdl-ftV5rqj1cISN7ogG0k5KsSVo4bSGPSfKlWBGZrr327m6Lnt5GOEi0nR8ewLuwgYbXZk1obNOmT98Memw.webp"
+}
+
+if "players" not in st.session_state:
+    st.session_state.players = initial_players
+
+
+auto_complete = st.toggle("예시 데이터로 채우기")
+print("page reloaded, auto_complete:", auto_complete)
+
+with st.form(key="form"):
+    col1, col2 = st.columns(2)
+    with col1:
+        name = st.text_input(
+            label="선수 이름",
+            value=example_player["name"] if auto_complete else ""
+        )
+    with col2:
+        types = st.multiselect(
+            label="선수 포지션", 
+            options=list(type_emoji_dict.keys()),
+            max_selections=4,
+            default=example_player["type"] if auto_complete else []
+        )
+    image_url = st.text_input(
+        label='선수 이미지 URL',
+        value=example_player["image_url"] if auto_complete else ""
+        )
+    submit = st.form_submit_button(label="추가")
+    if submit:
+        if not name:
+            st.error("선수 이름을 입력해주세요.")
+        elif len(types) == 0:
+            st.error("선수 포지션을 한 개 이상 선택해주세요.")
+        else:
+            st.success("선수가 추가되었습니다.")
+            st.session_state.players.append({
+                "name": name,
+                "type": types,
+                "image_url": image_url if image_url else "./images/default.png"
+            })
+
+
+        print("name:", name)
+        print("types:", types)
+        print("image_url:", image_url)
+
+
+
+
+for i in range(0, len(st.session_state.players), 3):
+    row_players = st.session_state.players[i:i + 3]
+    cols = st.columns(3)
+
+    for j in range(len(row_players)):
+        with cols[j]:
+            player = row_players[j]
+            with st.expander(label=f'**{i+j+1}. {player["name"]}**', expanded=True):
+                st.image(player["image_url"])
+                emoji_types = [f"{type_emoji_dict[t]} {t}" for t in player["type"]]
+                st.text(" / ".join(emoji_types))
+                delete_button = st.button(label="삭제", key = i+j, use_container_width=True)
+                if delete_button:
+                    del st.session_state.players[i+j]
+                    st.rerun()
+
+```
+
+  위 코드는 저장된 선수들의 정보를 화면에 보여주고, 사용자에게 선수들의 정보를 받을 수도 있는 웹 앱 예시입니다.  위의 코드에 사용된 다양한 Streamlit의 메서드들의 기능은 앞서 소개한 사이트에서 확인할 수 있습니다. 사용자에게 입력을 받아오는 경우, 페이지 리로드가 자동으로 실행되어 예상치 못한 동작이 발생할 수 있습니다. 때문에 이를 반드시 확인하고, 필요시 `st.rerun()`을 사용해 오작동을 방지해야 합니다.
 
