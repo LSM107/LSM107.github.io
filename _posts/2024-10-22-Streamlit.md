@@ -53,31 +53,7 @@ use_math: true
 
 ## Streamlit 개발 환경 설정
 
-<img src="images/2024-10-22-Streamlit/image-20241019130235602.png" alt="image-20241019130235602" style="zoom:50%;" />
-
- `app.py`라는 파이썬 파일을 생성하고, 해당 파일 내에 위와 같이 입력합니다. `set_page_config`는 페이지 탭의 이름과 그림 등을 설정하는 함수입니다.
-
-`app.py`를 실행시키면, 아래의 창이 생성되는 것을 확인할 수 있습니다. `app.py`에 적은 내용들을 화면에 출력할 때에는 아래의 명령어를 터미널에 입력합니다.
-
-```
-streamlit run app.py
-```
+<img src="/images/2024-10-22-Streamlit/image-20241019130235602.png" alt="image-20241019130235602" style="zoom:50%;" />
 
 
-
-<img src="/images/2024-10-22-Streamlit/image-20241019130940184.png" alt="image-20241019130940184" style="zoom:50%;" />
-
-
-
-
-
-
-
-## Streamlit Widget
-
-- **Streamlit Widget** 공식 문서: <https://docs.streamlit.io/develop/api-reference/widgets>
-
-
-
-**Streamlit**의 공식 문서 사이트를 들어가보면, 사이트를 장식할 수 있는 다양한 기능들을 확인할 수 있습니다. 소개된 기능들이 구현된 코드를 살펴보겠습니다.
 
