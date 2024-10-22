@@ -309,3 +309,77 @@ img {
 ```
 
 그런데, 이 CSS 코드를 사용해 이미지의 디자인을 바꾸면 페이지 간에 이동을 할 때 딜레이, CSS 코드 적용 이전의 이미지 형태가 잠깐 나타났다가 적용 이후로 바뀌는 문제가 발생한다는 문제점이 발생합니다. 따라서 이미지에 대해 CSS 코드를 적용할 때에 별도의 눈속임 장치를 고려할 필요가 있습니다.
+
+
+
+
+
+
+
+## Tailwind CSS 적용
+
+Tailwind CSS는 미리 다양한 디자인으로 만들어진 클래스를 사용해서 쉽게 스타일링을 할 수 있도록 하는 프레임워크입니다. 즉, 디자인 요소를 따로 적는 것이 아니라 class에서 지정하도록 해, 사용성이 훨씬 좋고, 코드도 간결해집니다.
+
+
+
+```python
+import json
+import streamlit as st
+
+# Data to be inserted into the chart
+data = [300, 50, 100]
+
+# Convert the data list to a JSON string
+data_json = json.dumps(data)
+
+html_string = f"""
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="shadow-lg rounded-lg overflow-hidden">
+    <div class="py-3 px-5 bg-gray-50">Doughnut chart</div>
+    <canvas class="p-10" id="chartDoughnut"></canvas>
+    </div>
+
+    <!-- Required chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Chart doughnut -->
+    <script>
+    const dataDoughnut = {{
+        labels: ["JavaScript", "Python", "Ruby"],
+        datasets: [
+        {{
+            label: "My First Dataset",
+            data: {data_json},
+            backgroundColor: [
+            "rgb(133, 105, 241)",
+            "rgb(164, 101, 241)",
+            "rgb(101, 143, 241)",
+            ],
+            hoverOffset: 4,
+        }},
+        ],
+    }};
+
+    const configDoughnut = {{
+        type: "doughnut",
+        data: dataDoughnut,
+        options: {{}},
+    }};
+
+    var chartBar = new Chart(
+        document.getElementById("chartDoughnut"),
+        configDoughnut
+    );
+    </script>
+</body>
+"""
+
+st.components.v1.html(html_string, height=1000)
+```
+
+위 코드는 Tailwind CSS에서 정의된 클래스를 사용해 쉽고 간편하게 도넛형 그래프를 화면에 표현해주는 코드입니다.
