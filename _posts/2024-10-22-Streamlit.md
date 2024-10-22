@@ -323,63 +323,7 @@ Tailwind CSS는 미리 다양한 디자인으로 만들어진 클래스를 사�
 
 
 ```python
-import json
-import streamlit as st
 
-# Data to be inserted into the chart
-data = [300, 50, 100]
-
-# Convert the data list to a JSON string
-data_json = json.dumps(data)
-
-html_string = f"""
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100 p-8">
-    <div class="shadow-lg rounded-lg overflow-hidden">
-    <div class="py-3 px-5 bg-gray-50">Doughnut chart</div>
-    <canvas class="p-10" id="chartDoughnut"></canvas>
-    </div>
-
-    <!-- Required chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Chart doughnut -->
-    <script>
-    const dataDoughnut = {{
-        labels: ["JavaScript", "Python", "Ruby"],
-        datasets: [
-        {{
-            label: "My First Dataset",
-            data: {data_json},
-            backgroundColor: [
-            "rgb(133, 105, 241)",
-            "rgb(164, 101, 241)",
-            "rgb(101, 143, 241)",
-            ],
-            hoverOffset: 4,
-        }},
-        ],
-    }};
-
-    const configDoughnut = {{
-        type: "doughnut",
-        data: dataDoughnut,
-        options: {{}},
-    }};
-
-    var chartBar = new Chart(
-        document.getElementById("chartDoughnut"),
-        configDoughnut
-    );
-    </script>
-</body>
-"""
-
-st.components.v1.html(html_string, height=1000)
 ```
 
-위 코드는 Tailwind CSS에서 정의된 클래스를 사용해 쉽고 간편하게 도넛형 그래프를 화면에 표현해주는 코드입니다.
+위 CSS 코드는 Tailwind CSS에서 정의된 클래스를 사용해 쉽고 간편하게 도넛형 그래프를 화면에 표현해주는 코드입니다.
