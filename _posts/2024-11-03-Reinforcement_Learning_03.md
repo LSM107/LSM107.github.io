@@ -148,7 +148,7 @@ $$
 
 
 $$
-G_t \doteq R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdot \cdot \cdot = \sum_{k=0}^\infin \gamma^kR_{t+k+1}
+G_t \doteq R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdot \cdot \cdot = \sum_{k=0}^\infty \gamma^kR_{t+k+1}
 $$
 
 
@@ -190,12 +190,12 @@ $$
 
 
 $$
-v_{\pi}(s) \doteq \mathbb{E}_{\pi}[G_t|S_t = s] = \mathbb{E}_{\pi}[\sum_{k=0}^{\infin}\gamma^kR_{t+k+1}|S_t = s]
+v_{\pi}(s) \doteq \mathbb{E}_{\pi}[G_t|S_t = s] = \mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}|S_t = s]
 $$
 
 
 $$
-q_{\pi}(s, a) \doteq \mathbb{E}_{\pi}[G_t|S_t = s, A_t = a] = \mathbb{E}_{\pi}[\sum_{k=0}^{\infin}\gamma^kR_{t+k+1}|S_t = s, A_t = a]
+q_{\pi}(s, a) \doteq \mathbb{E}_{\pi}[G_t|S_t = s, A_t = a] = \mathbb{E}_{\pi}[\sum_{k=0}^{\infty}\gamma^kR_{t+k+1}|S_t = s, A_t = a]
 $$
 
 
@@ -253,8 +253,6 @@ $$
 $$
 v_*(s) \doteq \underset{\pi}{max}\space v_\pi(s)
 $$
-
-
 
 $$
 q_*(s, a) \doteq \underset{\pi}{max}\space q_\pi(s, a)
