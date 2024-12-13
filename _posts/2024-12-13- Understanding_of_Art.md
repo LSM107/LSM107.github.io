@@ -16,9 +16,9 @@ author_profile: false
 sidebar:
     nav: "docs"
 
-search: false
+# search: false
 use_math: true
-published: true
+published: false
 
 ---
 
