@@ -237,6 +237,8 @@ Great Kindom은 이세돌이 만든 보드게임입니다. 이 보드게임은 �
 
 
 
+`game.py`
+
 ```python
 # game.py
 
@@ -662,6 +664,8 @@ class GreatKingdomGame:
 
 
 
+`model.py`
+
 ```python
 # model.py
 
@@ -860,6 +864,8 @@ class MCTS:
 ```
 
 
+
+`train_self_play.py`
 
 ```python
 # train_self_play.py
@@ -1218,9 +1224,10 @@ if __name__ == "__main__":
 
 
 
-위의 파이썬 파일을 통해 Great Kindom에 대해 MCTS 방법론으로 모델을 학습시킬 수 있습니다. 구체적으로는 알파고 제로의 구조를 사용했는데요, 아래의 논문에 구체적인 방법론이 소개되어 있습니다.
+위의 파이썬 파일을 통해 Great Kindom에 대해 MCTS 방법론으로 모델을 학습시킬 수 있습니다. 구체적으로는 알파고 제로의 구조를 사용했는데요, 아래의 논문에 구체적인 방법론이 소개되어 있습니다. 그리고 코드를 구현해놓은 깃허브 주소를 첨부했으니 필요시 참고 바랍니다.
 
 - <https://www.nature.com/articles/nature24270>
+- <https://github.com/LSM107/GreatKingdom/tree/main>
 
  
 
