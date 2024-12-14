@@ -18,7 +18,7 @@ minimal_mistakes_skin    : "contrast" # "air", "aqua", "contrast", "dark", "dirt
 locale                   : "ko-KR"
 title                    : "LSM107"
 title_separator          : "|"
-subtitle                 : "NN 정형검증 관련 공부중..."
+subtitle                 : "강화학습 공부중..."
 name                     : "임승민"
 description              : "..."
 url                      : "https://LSM107.github.io"
@@ -108,7 +108,7 @@ author:
   avatar           : 
   bio              : "서울시립대학교 인공지능학과 4학년 학부생입니다."
   location         : "서울시립대학교"
-  email            :
+  email            : "rsm1021902@gmail.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
