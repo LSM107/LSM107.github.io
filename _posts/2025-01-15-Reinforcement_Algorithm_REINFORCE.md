@@ -224,6 +224,8 @@ $$
 
 
 
+
+
 이제 위 식에서 $E_{\tau \sim \pi_\theta}[ \nabla_\theta \log \pi_\theta(a_t|s_t)]$가 0임을 보이겠습니다.
 
 
@@ -235,7 +237,6 @@ $$
 = \int \pi_\theta(a_t|s_t) \nabla_\theta \log \pi_\theta(a_t|s_t) d\tau
 $$
 
-로그 미분에 의해 아래와 같이 정리됩니다.
 $$
 = \int \nabla_\theta \pi_\theta(a_t|s_t) d\tau
 $$
