@@ -92,10 +92,10 @@ $$
 \max_\theta J(\pi_\theta) = E_{\tau \sim \pi_\theta}[R(\tau)]
 $$
 
- 
+
 이로써 알고리즘의 목표, 파라미터가 향해야 할 목표가 표현되었습니다. $\max_\theta J(\pi_\theta)$에 가까워지도록 파라미터가 바뀌어야 하는데, 이는 미분을 사용해서 쉽게 업데이트할 수 있습니다.
 
-  
+
 $$
 \theta \leftarrow \theta + \alpha\nabla_\theta J(\pi_\theta)
 $$
@@ -104,7 +104,7 @@ $$
 \theta \leftarrow \theta + \alpha\nabla_\theta E_{\tau \sim \pi_\theta}[R(\tau)]
 $$
 
- 
+
 그런데 위 수식에는 문제점이 있는데요, 그것은 $\nabla_\theta E_{\tau \sim \pi_\theta}[R(\tau)]$을 구하는게 어렵다는 점입니다. $\theta$가 분포 안에 숨어있는 형태로 있기 때문에 미분을 하기 위해서는 분포를 표면으로 끌어내주어야 합니다.
 
 
@@ -130,9 +130,19 @@ $$
 = \int dx \space R(\tau) \nabla_\theta p(\tau|\theta) \times \frac{p(x|\theta)}{p(x|\theta)}
 $$
 
+
+
+분모와 분자가 동일한 $\frac{p(x|\theta)}{p(x|\theta)}$을 곱합니다.
+
+
 $$
 = \int dx \space R(\tau)  p(\tau|\theta) \times \frac{\nabla_\theta p(\tau|\theta)}{p(x|\theta)}
 $$
+
+
+
+곱하기로 연결된 항의 위치를 바꿉니다.
+
 
 $$
 = \int dx \space R(\tau)  p(\tau|\theta) \times \nabla_\theta \log p(\tau|\theta)
@@ -144,11 +154,9 @@ $$
 
 
 
-
-
 위와 같이 로그 미분의 형태로 바꿔줬는데요, $p(\tau|\theta)$는 여전히 구하기 조금 어려운 값입니다. 다행히 우리는 마르코프 상황을 가정하기 때문에 이걸 다른 방법으로 쉽게 표현할 수 있습니다.
 
- 
+
 $$
 p(\tau|\theta) = \prod_{t\geq0}p(s_{t+1}|s_t, a_t)\pi_\theta(a_t|s_t)
 $$
@@ -175,7 +183,7 @@ $$
 
 이제 전체적으로 다시 쓰면 아래와 같습니다.
 
- 
+
 $$
 \nabla_\theta J(\pi_\theta) = E_{\tau \sim \pi_\theta}[\sum_{t\geq0}^T R(\tau) \nabla_\theta \log \pi_\theta(a_t|s_t)]
 $$
@@ -226,8 +234,6 @@ $$
 
 
 
-
-
 이제 위 식에서 $E_{\tau \sim \pi_\theta}[ \nabla_\theta \log \pi_\theta(a_t|s_t)]$가 0임을 보이겠습니다.
 
 
@@ -239,6 +245,7 @@ $$
 = \int \pi_\theta(a_t|s_t) \nabla_\theta \log \pi_\theta(a_t|s_t) d\tau
 $$
 
+로그 미분에 의해 아래와 같이 정리됩니다.
 $$
 = \int \nabla_\theta \pi_\theta(a_t|s_t) d\tau
 $$
@@ -255,14 +262,14 @@ $$
 = 0
 $$
 
-  
+
 때문에 $t$ 시점 이전의 값을 빼어주어도 결과 값에 아무런 값의 차이가 없습니다. 동일한 맥락으로 $t$시점의 행동에 영향을 받지 않는 값을 빼어주어도 괜찮습니다.
 
 
 $$
 \nabla_\theta J(\pi_\theta) = E_{\tau \sim \pi_\theta}[\sum_{t\geq0}^T (R_t(\tau) -b(s_t))\nabla_\theta \log \pi_\theta(a_t|s_t)]
 $$
-  
+
 
 보통 위와 같이 현재 시점의 상태와 관련된 함수값을 빼주는데요, 왜냐하면 지금 내가 행하는 행동이 있는데 행동을 하는 상태까지는 이미 결정되어 있기 때문입니다. 
 
