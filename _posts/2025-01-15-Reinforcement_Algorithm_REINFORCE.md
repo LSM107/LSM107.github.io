@@ -82,28 +82,27 @@ $$
 
 당연히 파라미터는 처음에 의미 없는 값으로 설정되기 때문에, 행동 선택 함수가 선택하는 행동은 정말 별로인 행동들일 것입니다. 이 파라미터를 적절한 값으로 업데이트하기 위해서는 우리가 원하는 목적을 수식으로 분명하게 명세해야 합니다.
 
-  
+
 
 $$
 J(\pi_\theta) = E_{\tau \sim \pi_\theta}[R(\tau)] = E_{\tau \sim \pi_\theta}[\sum^T_{t=0}\gamma^tr_t]
 $$
 
-  
+
 
 위 수식에서 $J(\pi_\theta)$가 행동 선택 함수의 목적 함수입니다. 목적 함수는 $E_{\tau \sim \pi_\theta}[R(\tau)]$로 정의되었는데요, 말로 풀어서 설명하면 행동 선택 함수를 통해 만들어진 궤적들이 가지는 각각의 보상의 합, 이득들의 평균값입니다. 그리고 이 목적 함수를 사용해서 알고리즘의 목표를 표현할 수 있습니다.
 
-  
+
 
 $$
 \max_\theta J(\pi_\theta) = E_{\tau \sim \pi_\theta}[R(\tau)]
 $$
 
-   
+ 
 
 이로써 알고리즘의 목표, 파라미터가 향해야 할 목표가 표현되었습니다. $\max_\theta J(\pi_\theta)$에 가까워지도록 파라미터가 바뀌어야 하는데, 이는 미분을 사용해서 쉽게 업데이트할 수 있습니다.
 
   
-
 $$
 \theta \leftarrow \theta + \alpha\nabla_\theta J(\pi_\theta)
 $$
@@ -112,7 +111,7 @@ $$
 \theta \leftarrow \theta + \alpha\nabla_\theta E_{\tau \sim \pi_\theta}[R(\tau)]
 $$
 
-   
+ 
 
 그런데 위 수식에는 문제점이 있는데요, 그것은 $\nabla_\theta E_{\tau \sim \pi_\theta}[R(\tau)]$을 구하는게 어렵다는 점입니다. $\theta$가 분포 안에 숨어있는 형태로 있기 때문에 미분을 하기 위해서는 분포를 표면으로 끌어내주어야 합니다.
 
@@ -126,17 +125,17 @@ $$
 
 기댓값은 적분으로 정의됩니다. 기댓값을 풀어서 조건부에 파라미터가 드러나게 합니다.
 
-  
+
 
 $$
 = \int dx \space R(\tau) \nabla_\theta p(\tau|\theta)
 $$
 
-   
+ 
 
 $dx$와 $R(\tau)$는 $\theta$와 관련이 없기 때문에, 이 둘을 넘어서 $\nabla_\theta$를 위치시킵니다.
 
-   
+ 
 
 $$
 = \int dx \space R(\tau) \nabla_\theta p(\tau|\theta) \times \frac{p(x|\theta)}{p(x|\theta)}
@@ -154,11 +153,11 @@ $$
 = E_{\tau \sim \pi_\theta}[R(\tau)\nabla_\theta \log p(\tau|\theta)]
 $$
 
-​    
+
 
 위와 같이 로그 미분의 형태로 바꿔줬는데요, $p(\tau|\theta)$는 여전히 구하기 조금 어려운 값입니다. 다행히 우리는 마르코프 상황을 가정하기 때문에 이걸 다른 방법으로 쉽게 표현할 수 있습니다.
 
-   
+ 
 
 $$
 p(\tau|\theta) = \prod_{t\geq0}p(s_{t+1}|s_t, a_t)\pi_\theta(a_t|s_t)
@@ -172,11 +171,11 @@ $$
 \sum_{t\geq0} [\log p(s_{t+1}|s_t, a_t) + \log \pi_\theta(a_t|s_t)]
 $$
 
-   
+ 
 
 위 식에 $\nabla_\theta$을 취하게 되면, 오른쪽 로그 식은 $\theta$와 관련이 없기 때문에 사라지게 됩니다.
 
-  
+
 
 $$
 \nabla_\theta \log p(\tau|\theta) = \nabla_\theta\sum_{t\geq0} \log \pi_\theta(a_t|s_t)
@@ -186,13 +185,15 @@ $$
 
 이제 전체적으로 다시 쓰면 아래와 같습니다.
 
-​    
+ 
 $$
 \nabla_\theta J(\pi_\theta) = E_{\tau \sim \pi_\theta}[\sum_{t\geq0}^T R(\tau) \nabla_\theta \log \pi_\theta(a_t|s_t)]
 $$
 
 
+
 그런데요 위 식을 그대로 쓰게되면 분산이 굉장히 큽니다. 왜냐하면 전체 궤적의 이득 값을 사용하기 때문인데요, $t$ 시점 이전의 보상들은 결과값에 영향을 미치지 못하기 때문에 아래와 같이 $t$ 시점 이후의 보상들의 합으로 바꿔써도 괜찮습니다.
+
 
 
 $$
@@ -261,7 +262,7 @@ $$
 = 0
 $$
 
-   
+  
 
 때문에 $t$ 시점 이전의 값을 빼어주어도 결과 값에 아무런 값의 차이가 없습니다. 동일한 맥락으로 $t$시점의 행동에 영향을 받지 않는 값을 빼어주어도 괜찮습니다.
 
