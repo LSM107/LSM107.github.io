@@ -130,19 +130,9 @@ $$
 = \int dx \space R(\tau) \nabla_\theta p(\tau|\theta) \times \frac{p(x|\theta)}{p(x|\theta)}
 $$
 
-
-
-분모와 분자가 동일한 $\frac{p(x|\theta)}{p(x|\theta)}$을 곱합니다.
-
-
 $$
 = \int dx \space R(\tau)  p(\tau|\theta) \times \frac{\nabla_\theta p(\tau|\theta)}{p(x|\theta)}
 $$
-
-
-
-곱하기로 연결된 항의 위치를 바꿉니다.
-
 
 $$
 = \int dx \space R(\tau)  p(\tau|\theta) \times \nabla_\theta \log p(\tau|\theta)
