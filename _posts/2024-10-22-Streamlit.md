@@ -3,7 +3,7 @@ layout: single
 
 title:  "Streamlit을 활용한 웹 서비스 구축"
 
-categories: Web
+categories: Tools
 
 tag: [Streamlit, Web]
 
