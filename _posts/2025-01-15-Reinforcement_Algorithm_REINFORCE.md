@@ -144,12 +144,9 @@ $$
 
 
 
-미분 대상이 드러난 형태로 식이 꽤나 단순해 졌습니다.
-
-
-
 위와 같이 로그 미분의 형태로 바꿔줬는데요, $p(\tau|\theta)$는 여전히 구하기 조금 어려운 값입니다. 다행히 우리는 마르코프 상황을 가정하기 때문에 이걸 다른 방법으로 쉽게 표현할 수 있습니다.
 
+_
 
 $$
 p(\tau|\theta) = \prod_{t\geq0}p(s_{t+1}|s_t, a_t)\pi_\theta(a_t|s_t)
@@ -229,9 +226,9 @@ $$
 
 
 
-
 이제 위 식에서 $E_{\tau \sim \pi_\theta}[ \nabla_\theta \log \pi_\theta(a_t|s_t)]$가 0임을 보이겠습니다.
 
+_
 
 $$
 E_{\tau \sim \pi_\theta}[ \nabla_\theta \log \pi_\theta(a_t|s_t)]
