@@ -218,7 +218,9 @@ $$
 = E_{\tau \sim \pi_\theta}[\sum_0^{t-1} \gamma^{t'} r_{t'} \nabla_\theta \log \pi_\theta(a_t|s_t)]
 $$
 
-뒤쪽 식만 살펴보겠습니다.
+그런데 앞쪽 궤적의 보상의 합 부분은 상수이기 때문에, 뒤쪽 식만 0인지 확인하면 됩니다.
+
+
 
 $$
 E_{\tau \sim \pi_\theta}[ \nabla_\theta \log \pi_\theta(a_t|s_t)]
