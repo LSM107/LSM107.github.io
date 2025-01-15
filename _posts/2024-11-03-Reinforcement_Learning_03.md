@@ -3,8 +3,7 @@ layout: single
 
 title:  "강화학습 03: 유한 마르코프 결정 과정"
 
-categories: Reinforcement Learning
-
+categories: RL
 tag: [Reinforcement Learning, Markov Decision Process]
 
 typora-root-url: ../

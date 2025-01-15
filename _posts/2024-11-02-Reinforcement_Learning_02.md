@@ -3,7 +3,7 @@ layout: single
 
 title:  "강화학습 02: 다중 선택"
 
-categories: Reinforcement Learning
+categories: RL
 
 tag: [Reinforcement Learning]
 

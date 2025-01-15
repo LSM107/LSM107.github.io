@@ -3,7 +3,7 @@ layout: single
 
 title:  "강화학습 04: 동적 프로그래밍"
 
-categories: Reinforcement Learning
+categories: RL
 
 tag: [Reinforcement Learning, Markov Decision Process]
 

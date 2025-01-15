@@ -3,7 +3,7 @@ layout: single
 
 title:  "강화학습 06: 시간차 학습"
 
-categories: Reinforcement Learning
+categories: RL
 
 tag: [Reinforcement Learning, TD]
 

@@ -3,7 +3,7 @@ layout: single
 
 title:  "강화학습 05: 몬테카를로 방법"
 
-categories: Reinforcement Learning
+categories: RL
 
 tag: [Reinforcement Learning, Monte Carlo]
 

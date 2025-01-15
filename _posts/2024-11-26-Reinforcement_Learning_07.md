@@ -3,7 +3,7 @@ layout: single
 
 title:  "강화학습 07: n단계 부트스트랩"
 
-categories: Reinforcement Learning
+categories: RL
 
 tag: [Reinforcement Learning, TD]
 

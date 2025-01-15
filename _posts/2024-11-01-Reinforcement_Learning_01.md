@@ -3,7 +3,7 @@ layout: single
 
 title:  "강화학습 01: 강화학습이란?"
 
-categories: Reinforcement Learning
+categories: RL
 
 tag: [Reinforcement Learning]
 

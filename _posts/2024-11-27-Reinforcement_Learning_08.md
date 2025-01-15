@@ -3,7 +3,7 @@ layout: single
 
 title:  "강화학습 08: 표에 기반한 방법을 이용한 계획 및 학습"
 
-categories: Reinforcement Learning
+categories: RL
 
 tag: [Reinforcement Learning, TD]
 
