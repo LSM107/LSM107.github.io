@@ -218,7 +218,7 @@ $$
 = E_{\tau \sim \pi_\theta}[\sum_0^{t-1} \gamma^{t'} r_{t'} \nabla_\theta \log \pi_\theta(a_t|s_t)]
 $$
 
-
+뒤쪽 식만 살펴보겠습니다.
 
 $$
 E_{\tau \sim \pi_\theta}[ \nabla_\theta \log \pi_\theta(a_t|s_t)]
