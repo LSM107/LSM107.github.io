@@ -401,3 +401,14 @@ $$
 
 모든 궤적에 대해서 기울기를 구했으면 마지막에 한 번에 업데이트를 수행합니다. 위에서 설명했던 수식과 다르게 코드에서는 `loss = -torch.log(prob) * R` 로 음수 기호가 붙는데요, 이는 경사하강이 아닌 경사상승을 해야하기 때문입니다. Pytorch를 포함하는 대부분의 라이브러리는 기본적으로 경사하강을 하는 상황을 가정하기 때문에 음수 기호를 붙혀줘 보상을 최대화하도록 업데이트합니다.
 
+
+
+<img src="/images/2025-01-15-Reinforcement_Algorithm_REINFORCE/image-20250116102640302.png" alt="image-20250116102640302" style="zoom:40%;" />
+
+실제로 학습을 시켜보면 꾸준히 성능이 오르는 것을 확인할 수 있습니다. 
+
+
+
+![cartpole_reinforce 2](/images/2025-01-15-Reinforcement_Algorithm_REINFORCE/cartpole_reinforce 2.gif)
+
+학습된 모델로 환경에서 렌더링한 결과인데요, 적당히 잘 중심을 맞추는 것도 확인할 수 있습니다.
