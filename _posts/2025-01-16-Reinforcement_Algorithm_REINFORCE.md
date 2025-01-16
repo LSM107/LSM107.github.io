@@ -311,12 +311,15 @@ $$
 
 
 
+
+
+### 학습 결과
+
 <img src="/images/2025-01-15-Reinforcement_Algorithm_REINFORCE/image-20250116102640302.png" alt="image-20250116102640302" style="zoom:40%;" />
 
-실제로 학습을 시켜보면 꾸준히 성능이 오르는 것을 확인할 수 있습니다. 아래는 학습된 모델을 환경에서 렌더링한 결과입니다.
+실제로 학습을 시켜보면 꾸준히 성능이 오르는 것을 확인할 수 있습니다. 아래는 테스트 렌더링 결과입니다.
 
 
 
 ![cartpole_reinforce 2](/images/2025-01-15-Reinforcement_Algorithm_REINFORCE/cartpole_reinforce 2.gif)
 
-좌우로 움직이면서 막대기의 중심을 잘 잡아가는 것을 확인할 수 있습니다. 
