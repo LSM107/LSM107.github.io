@@ -40,3 +40,16 @@ published: false
 
 
 # Actor Critic
+
+Monte-Carlo Policy Gradient(REINFORCE) 알고리즘에서 이득의 분산을 줄이기 위한 여러 기술적인 요소들이 있었음에도, 여전히 꽤나 높은 분산을 가집니다.
+
+
+
+
+
+
+
+
+
+
+

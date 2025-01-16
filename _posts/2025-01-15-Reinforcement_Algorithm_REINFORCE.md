@@ -40,8 +40,7 @@ use_math: true
 
 # REINFORCE
 
-REINFORCE 알고리즘은 정책 기반 강화학습 알고리즘입니다. 오랜 시간동안 강화학습에서는 가치 함수를 기반으로 정책을 선택하는 방식을 채택했습니다. 그러나 이 방식으로는 연속되는 상태공간을 가지는 문제를 풀기가 굉장히 어려웠습니다. 이 문제점의 해결책으로 가치함수를 파라미터화하는 아이디어가 제시되었는데요, REINFORCE 알고리즘에서는 가치함수를 파라미터화하는 것이 아니라 정책을 바로 내뱉는 함수를 파라미터로 표현합니다. 
-
+**REINFORCE** 알고리즘은 정책 기반 강화학습 알고리즘입니다. 오랜 시간동안 강화학습에서는 가치 함수를 기반으로 정책을 선택하는 방식을 채택했습니다. 그러나 이 방식으로는 연속되는 상태공간을 가지는 문제를 풀기가 굉장히 어려웠습니다. 이 문제점의 해결책으로 가치함수를 파라미터화하는 아이디어가 제시되었는데요, REINFORCE 알고리즘에서는 가치함수를 파라미터화하는 것이 아니라 정책을 바로 내뱉는 함수를 파라미터로 표현합니다. 
 
 $$
 \pi_{\theta}(s) = a
@@ -80,182 +79,91 @@ $$
 당연히 파라미터는 처음에 의미 없는 값으로 설정되기 때문에, 행동 선택 함수가 선택하는 행동은 정말 별로인 행동들일 것입니다. 이 파라미터를 적절한 값으로 업데이트하기 위해서는 우리가 원하는 목적을 수식으로 분명하게 명세해야 합니다.
 
 
-$$
-J(\pi_\theta) = E_{\tau \sim \pi_\theta}[R(\tau)] = E_{\tau \sim \pi_\theta}[\sum^T_{t=0}\gamma^tr_t]
-$$
 
-
-위 수식에서 $J(\pi_\theta)$가 행동 선택 함수의 목적 함수입니다. 목적 함수는 $E_{\tau \sim \pi_\theta}[R(\tau)]$로 정의되었는데요, 말로 풀어서 설명하면 행동 선택 함수를 통해 만들어진 궤적들이 가지는 각각의 보상의 합, 이득들의 평균값입니다. 그리고 이 목적 함수를 사용해서 알고리즘의 목표를 표현할 수 있습니다.
+에피소딕 문제에서 성능은 아래와 같이 정의됩니다.
 
 
 $$
-\max_\theta J(\pi_\theta) = E_{\tau \sim \pi_\theta}[R(\tau)]
+J(\theta) \doteq v_{\pi_\theta}(s)
 $$
 
 
-이로써 알고리즘의 목표, 파라미터가 향해야 할 목표가 표현되었습니다. $\max_\theta J(\pi_\theta)$에 가까워지도록 파라미터가 바뀌어야 하는데, 이는 미분을 사용해서 쉽게 업데이트할 수 있습니다.
+이제 위 수식에 대해서 경사도를 구해야 하는데요, 경사도를 구해서 $\theta \leftarrow \theta + \alpha \nabla J(\theta)$ 라는 업데이트 식으로 파라미터를 수정합니다. 그런데 다행히도 $J(\theta)$의 경사도는 **정책 경사도 정리**에 의해 그 꼴이 간단하게 정리돼 있습니다.
 
 
 $$
-\theta \leftarrow \theta + \alpha\nabla_\theta J(\pi_\theta)
+\nabla J(\theta) \propto \sum_s \mu(s) \sum_a \nabla \pi(a|s) q_\pi (s, a)
 $$
 
-$$
-\theta \leftarrow \theta + \alpha\nabla_\theta E_{\tau \sim \pi_\theta}[R(\tau)]
-$$
+- $\mu(s)$는 상태 $s$의 확률을 의미합니다. 실험적으로는 어떠한 상태든 상태를 방문한 횟수로 상태 $s$를 방문한 횟수를 나누어 구합니다.
 
 
-그런데 위 수식에는 문제점이 있는데요, 그것은 $\nabla_\theta E_{\tau \sim \pi_\theta}[R(\tau)]$을 구하는게 어렵다는 점입니다. $\theta$가 분포 안에 숨어있는 형태로 있기 때문에 미분을 하기 위해서는 분포를 표면으로 끌어내주어야 합니다.
 
-
-$$
-\nabla_\theta E_{\tau \sim \pi_\theta}[R(\tau)] = \nabla_\theta\int dx \space R(\tau)p(\tau|\theta)
-$$
-
-
-기댓값은 적분으로 정의됩니다. 기댓값을 풀어서 조건부에 파라미터가 드러나게 합니다.
+그런데 우리는 여기서 정책을 근사할 것이기 때문에 $\pi$ 안에 $\theta$를 스윽 넣어주고 자리를 뒤로 빼줍니다.
 
 
 $$
-= \int dx \space R(\tau) \nabla_\theta p(\tau|\theta)
+\nabla J(\theta) \propto \sum_s \mu(s) \sum_a  q_\pi (s, a)\nabla \pi(a|s, \theta)
 $$
 
- 
 
-$dx$와 $R(\tau)$는 $\theta$와 관련이 없기 때문에, 이 둘을 넘어서 $\nabla_\theta$를 위치시킵니다.
+$\sum_s \mu(s)$를 앞에 곱해준다는 것은 정책 $\pi$를 따를 때의 기댓값과 동일한 의미입니다. 따라서..
 
- 
 
 $$
-= \int dx \space R(\tau) \nabla_\theta p(\tau|\theta) \times \frac{p(x|\theta)}{p(x|\theta)}
+\nabla J(\theta) \propto E_\pi[ \sum_a  q_\pi (S_t, a)\nabla \pi(a|S_t, \theta)]
 $$
 
-$$
-= \int dx \space R(\tau)  p(\tau|\theta) \times \frac{\nabla_\theta p(\tau|\theta)}{p(x|\theta)}
-$$
+- $s$ 대신에 $S_t$가 들어갔는데요, 타임 스텝을 밟아갈 때 정책 $\pi$를 따르면서 상태들을 방문하기 때문에 다르게 표기합니다.
+- 이어서 로그 미분 트릭을 적용해서 식을 단순화합니다.
+
 
 $$
-= \int dx \space R(\tau)  p(\tau|\theta) \times \nabla_\theta \log p(\tau|\theta)
+\nabla J(\theta) \propto E_\pi[ \sum_a  \pi(a|S_t, \theta) \space q_\pi (S_t, a)\nabla \log \pi(a|S_t, \theta)]
 $$
 
 $$
-= E_{\tau \sim \pi_\theta}[R(\tau)\nabla_\theta \log p(\tau|\theta)]
+\nabla J(\theta) \propto E_\pi[  \space q_\pi (S_t, a)\nabla \log \pi(a|S_t, \theta)]
 $$
 
 
 
-위와 같이 로그 미분의 형태로 바꿔줬는데요, 궤적의 확률값은 마르코프 상황에서 아래와 같이 쉽게 구해집니다.
-
-
-
-$$
-p(\tau|\theta) = \prod_{t\geq0}p(s_{t+1}|s_t, a_t)\pi_\theta(a_t|s_t)
-$$
-
-$$
-\log p(\tau|\theta) = \log\prod_{t\geq0}p(s_{t+1}|s_t, a_t)\pi_\theta(a_t|s_t)
-$$
-
-$$
-\sum_{t\geq0} [\log p(s_{t+1}|s_t, a_t) + \log \pi_\theta(a_t|s_t)]
-$$
-
- 
-
-위 식에 $\nabla_\theta$을 취하게 되면, 오른쪽 로그 식은 $\theta$와 관련이 없기 때문에 사라지게 됩니다.
-
+위 식에서 $q$함수가 사용됐는데 REINFORCE 알고리즘은 다른 말로 **몬테카를로** 정책 경사 알고리즘이라고 합니다. 때문에 $q$함수 자리에 $G_t$를 사용합니다.
 
 
 $$
-\nabla_\theta \log p(\tau|\theta) = \nabla_\theta\sum_{t\geq0} \log \pi_\theta(a_t|s_t)
+\nabla J(\theta) \propto E_\pi[  \space G_t \nabla \log \pi(a|S_t, \theta)]
+$$
+
+$$
+\theta_{t+1} \doteq \theta_{t} + \alpha G_t\nabla \log \pi(a|S_t, \theta)
 $$
 
 
 
-이제 전체적으로 다시 쓰면 아래와 같습니다.
-
-
-$$
-\nabla_\theta J(\pi_\theta) = E_{\tau \sim \pi_\theta}[\sum_{t\geq0}^T R(\tau) \nabla_\theta \log \pi_\theta(a_t|s_t)]
-$$
+이로써 REINFORCE의 갱신 규칙을 얻게 되었습니다.
 
 
 
-그런데요 위 식을 그대로 쓰게되면 분산이 굉장히 큽니다. 왜냐하면 전체 궤적의 이득 값을 사용하기 때문인데요, $t$ 시점 이전의 보상들은 결과값에 영향을 미치지 못하기 때문에 아래와 같이 $t$ 시점 이후의 보상들의 합으로 바꿔써도 괜찮습니다.
 
 
+### Baseline 적용
 
 $$
-= E_{\tau \sim \pi_\theta}[\sum_{t\geq0}^T R_t(\tau) \nabla_\theta \log \pi_\theta(a_t|s_t)]
-$$
-
-
-한마디로 $R(\tau)$를 $R_t(\tau)$로 바꿔적는건데요, 이게 괜찮은 이유는 아래에서 설명합니다.
-
-
-$$
-\sum_0^{t-1} \gamma^{t'} r_{t'} + R_t(\tau)
-$$
-
-
-$R(\tau)$와 $R_t(\tau)$의 관계는 위와 같습니다. $R_t(\tau)$는 $t$ 시점의 행동 선택에 따라 달라지는 반면, $\sum_0^{t-1} \gamma^{t'} r_{t'}$의 값은 영향을 받지 않습니다. 
-
-
-$$
-\nabla_\theta J(\pi_\theta) = E_{\tau \sim \pi_\theta}[\sum_{t\geq0}^T R(\tau) \nabla_\theta \log \pi_\theta(a_t|s_t)]
-$$
-
-$$
-= E_{\tau \sim \pi_\theta}[\sum_{t\geq0}^T (R_t(\tau) +  \sum_0^{t-1} \gamma^{t'} r_{t'}) \nabla_\theta \log \pi_\theta(a_t|s_t)]
+\nabla J(\theta) \propto E_\pi[ \sum_a  q_\pi (S_t, a)\nabla \pi(a|S_t, \theta)]
 $$
 
 
 
-두 식이 동일하기 위해서는 아래 식의 두 번째 항의 값이 0이 되어야 합니다.
+위 식을 살펴봤을 때, 아래와 같은 변형을 해도 그 값이 동일합니다.
 
 
 $$
-= E_{\tau \sim \pi_\theta}[\sum_0^{t-1} \gamma^{t'} r_{t'} \nabla_\theta \log \pi_\theta(a_t|s_t)]
-$$
-
-그런데 앞쪽 궤적의 보상의 합 부분은 상수이기 때문에, 뒤쪽 식만 0인지 확인하면 됩니다.
-
-
-
-$$
-E_{\tau \sim \pi_\theta}[ \nabla_\theta \log \pi_\theta(a_t|s_t)]
-$$
-
-$$
-= \int \pi_\theta(a_t|s_t) \nabla_\theta \log \pi_\theta(a_t|s_t) d\tau
-$$
-
-$$
-= \int \nabla_\theta \pi_\theta(a_t|s_t) d\tau
-$$
-
-$$
-= \nabla_\theta \int  \pi_\theta(a_t|s_t) d\tau
-$$
-
-$$
-= \nabla_\theta[1]
-$$
-
-$$
-= 0
+\nabla J(\theta) \propto E_\pi[ \sum_a  (q_\pi (S_t, a) - b(s))\nabla \pi(a|S_t, \theta)]
 $$
 
 
-때문에 $t$ 시점 이전의 값을 빼어주어도 결과 값에 아무런 값의 차이가 없습니다. 동일한 맥락으로 $t$시점의 행동에 영향을 받지 않는 값을 빼어주어도 괜찮습니다.
-
-
-$$
-\nabla_\theta J(\pi_\theta) = E_{\tau \sim \pi_\theta}[\sum_{t\geq0}^T (R_t(\tau) -b(s_t))\nabla_\theta \log \pi_\theta(a_t|s_t)]
-$$
-
-
-보통 위와 같이 현재 시점의 상태와 관련된 함수값을 빼주는데요, 왜냐하면 지금 내가 행하는 행동이 있는데 행동을 하는 상태까지는 이미 결정되어 있기 때문입니다. 
+왜냐하면 $\nabla \pi(a|S_t, \theta)$는 모든 $a$에 대해서 합이 0입니다. 때문에 빼주는 값이 $a$와 연관없는 함수라면 결과값에 영향을 주지 못합니다. 이렇게 특정 값을 빼주게 되면 갱신 기댓값이 갖는 분산에 큰 영향을 미치기 때문에 학습에 도움을 줄 수 있습니다.
 
 
 
@@ -395,7 +303,7 @@ if __name__ == '__main__':
 
 
 $$
-R(\tau) \nabla_\theta \log \pi_\theta(a_t|s_t)
+\theta_{t+1} \doteq \theta_{t} + \alpha G_t\nabla \log \pi(a|S_t, \theta)
 $$
 
 
