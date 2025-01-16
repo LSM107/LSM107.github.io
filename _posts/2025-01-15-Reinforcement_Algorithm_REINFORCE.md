@@ -271,6 +271,12 @@ $$
 
 
 
+
+
+
+
+## 파이썬 코드
+
 아래는 파이썬에서 구현한 REINFORCE 알고리즘입니다. 
 
 ```python
@@ -367,4 +373,31 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+
+코드가 꽤나 긴데, REINFORCE 알고리즘의 핵심이 되는`train`부분을 집중적으로 살펴보겠습니다.
+
+
+
+```python
+    def train_net(self):
+        R = 0
+        self.optimizer.zero_grad()
+        for r, prob in self.data[::-1]:
+            R = r + gamma * R
+            loss = -torch.log(prob) * R
+            loss.backward()
+        self.optimizer.step()
+        self.data = []
+
+```
+
+코드를 보면, 하나의 에피소드가 진행되는 동안에는 학습이 수행되지 않고, 에이전트가 받은 보상과 에이전트가 선택한 행동의 정책 확률을 저장합니다. 그리고 REINFORCE 알고리즘의 아래 수식에 해당하는 값을 반복 계산합니다.
+
+
+$$
+R(\tau) \nabla_\theta \log \pi_\theta(a_t|s_t)
+$$
+
+
+모든 궤적에 대해서 기울기를 구했으면 마지막에 한 번에 업데이트를 수행합니다. 위에서 설명했던 수식과 다르게 코드에서는 `loss = -torch.log(prob) * R` 로 음수 기호가 붙는데요, 이는 경사하강이 아닌 경사상승을 해야하기 때문입니다. Pytorch를 포함하는 대부분의 라이브러리는 기본적으로 경사하강을 하는 상황을 가정하기 때문에 음수 기호를 붙혀줘 보상을 최대화하도록 업데이트합니다.
 
