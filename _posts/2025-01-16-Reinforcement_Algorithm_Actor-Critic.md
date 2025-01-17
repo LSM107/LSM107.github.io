@@ -78,13 +78,15 @@ $$
 
 
 
+위 수식은 행동 비평가 알고리즘 중에서도 **A2C**에 해당하는 알고리즘입니다. 기본에 해당되는 Actor Critic 알고리즘에서는 $(q_\pi (S_t, a) - V(S_t))$가 아닌 $q_\pi (S_t, a)$를 사용합니다. baseline이 없기 때문에 갱신 기댓값이 갖는 분산이 크다는 단점이 있습ㄴ다.
+
 
 
 
 
 ## 알고리즘
 
-<img src="/images/2025-01-16-Reinforcement_Algorithm_Actor-Critic/image-20250116172001734.png" alt="image-20250116172001734" style="zoom:50%;" />
+<img src="/images/2025-01-16-Reinforcement_Algorithm_Actor-Critic/image-20250116172001734.png" alt="image-20250116172001734" style="zoom:40%;" />
 
 $w$ 파라미터 식이 조금 뜬금없는데요, $w$는 비평가의 파라미터인데 TD-error를 통한 업데이트가 수행된다고 생각하면 됩니다. 대부분의 경우에 MSE Error로 구현됩니다.
 
