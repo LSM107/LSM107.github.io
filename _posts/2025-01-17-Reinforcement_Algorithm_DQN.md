@@ -1,7 +1,7 @@
 ---
 layout: single
 
-title:  "강화학습 알고리즘: DQN"
+title:  "강화학습 알고리즘: DQN(Deep Q Network)"
 
 categories: RL_Algorithm
 
@@ -28,7 +28,7 @@ use_math: true
 
 
 
-자료 출처: 단단한 강화학습, Reinforcement Learning An Introduction , 2nd edition. 리처드 서튼, 앤드류 바트로, 김성우(옮긴이),
+자료 출처: 단단한 강화학습, Reinforcement Learning An Introduction , 2nd edition. 리처드 서튼, 앤드류 바트로, 김성우(옮긴이)
 
 
 
@@ -60,7 +60,7 @@ Q 함수를 최적화할 때 사용되는 위 수식(Q-learning)은 수렴성이
 $$
 Q(S_t, A_t|\theta) \leftarrow Q(S_t, A_t|\theta) + \alpha[R_{t+1} + \gamma \space \underset{a}max\space Q(S_{t+1}, a|\theta) - Q(S_t, A_t|\theta)]
 $$
-위와 같이 파라미터화를 한 Q 함수를 사용하면 더 이상 모든 상태 행동 쌍의 값을 저장할 필요가 없어집니다. 그리고 Q 근사 함수는 겪어보지 못한 상태의 이득을 예측할 수 있는 일반화 성능을 갖습니다. 
+위와 같이 파라미터화를 한 Q 함수를 사용하면 더 이상 모든 상태 행동 쌍의 값을 저장할 필요가 없어집니다. 그리고 Q 근사 함수는 겪어보지 못한 상태의 이득을 예측할 수 있는 일반화 능력을 갖습니다. 
 
 
 
@@ -126,7 +126,7 @@ $$
 
 <img src="/images/2025-01-17-Reinforcement_Algorithm_DQN/image-20250117155809630.png" alt="image-20250117155809630" style="zoom:50%;" />
 
-위는 DQN의 알고리즘입니다. Replay Buffer 아이디어가 사용된 것을 확인할 수 있는데요, 다만 Target Q Network가 사용된 것인지는 알고리즘에 명확하게 드러나지 않은 것 같습니다. 하지만 논문에서 표현된 손실함수를 보면 이전 iteration의 파라미터를 사용해 TD-target을 계산한다고 명시돼 있습니다. 
+위 사진이 DQN의 알고리즘입니다. Replay Buffer 아이디어가 사용된 것을 확인할 수 있는데, Target Q Network가 사용된 것인지는 알고리즘에 명확하게 드러나지 않은 것 같습니다. 하지만 논문에서 정의된 손실함수를 보면 이전 iteration의 파라미터를 사용해 TD-target을 계산한다고 분명하게 표현돼 있습니다. 
 
 
 
