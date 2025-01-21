@@ -18,7 +18,7 @@ sidebar:
 
 # search: false
 use_math: true
-published: false
+published: True
 ---
 
 
