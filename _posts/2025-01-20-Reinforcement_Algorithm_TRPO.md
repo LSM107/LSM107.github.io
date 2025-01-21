@@ -1,7 +1,7 @@
 ---
 layout: single
 
-title:  "강화학습 알고리즘: TRPO(Deep Deterministic Policy Gradient)"
+title:  "강화학습 알고리즘: TRPO(Trust Region Policy Optimization)"
 
 categories: RL_Algorithm
 
