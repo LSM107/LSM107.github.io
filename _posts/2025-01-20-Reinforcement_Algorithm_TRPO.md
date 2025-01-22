@@ -484,7 +484,112 @@ $$
 
 
 
-아무튼 실제로는 MC로 샘플링을 하고 있으니까 샘플들의 Hessian의 평균을 Fisher Information Matrix로 사용하게 됩니다.
+실제로는 MC로 샘플링을 할 것이기 때문에 샘플들의 Hessian의 평균을 Fisher Information Matrix로 사용하게 됩니다.
+
+
+$$
+\max_{\theta} 
+\nabla_\theta L_{\theta_{old}}(\theta)|_{\theta=\theta_{old}}(\theta - \theta_{old})
+\space\space\space   subject \space to \space \space\space  
+\frac{1}{2}(\theta - \theta_{old})^TH(\theta - \theta_{old})
+\leq \delta
+$$
+
+
+아무튼 간에 위의 식과 같이 정리가 됐습니다. 위 식을 업데이트 할 때 보통은 경사상승법을 사용하는데, 여기에서는 NPG를 사용해 업데이트합니다.
+
+
+$$
+H^{-1}\nabla_{\theta}L_{\theta_{old}}(\theta)|_{\theta=\theta_{old}}
+$$
+
+
+위 식이 NPG입니다. NPG는 일반 경사에 비해서 훨씬 더 최적점에 가까운 방향으로 업데이트를 수행하도록 도와줍니다. 왜 Hessian을 사용하는 NPG의 성능이 일반 경사보다 더 좋은지 아래에서 설명합니다.
+
+
+
+<img src="/images/2025-01-20-Reinforcement_Algorithm_TRPO/image-20250122132831911.png" alt="image-20250122132831911" style="zoom:40%;" />
+
+위 두 함수는 $x=1$에서 만납니다. 만나는 것 뿐만이 아니라 접하기 때문에 기울기 역시 동일합니다. 하지만 **기울기의 변화량**은 빨간색으로 나타난 함수에서 더 큽니다. 기울기의 변화량을 **곡률(Cavature)**라고 부릅니다. NPG는 이 곡률을 사용해서 경사 상승을 수행합니다. 이걸 사용하는게 왜 최적화에 도움이 되는지 아래에서 설명합니다.
+
+
+
+<img src="/images/2025-01-20-Reinforcement_Algorithm_TRPO/image-20250122133529247.png" alt="image-20250122133529247" style="zoom:50%;" /><img src="/images/2025-01-20-Reinforcement_Algorithm_TRPO/image-20250122133624819.png" alt="image-20250122133624819" style="zoom:50%;" />
+
+위와 같이 축 사이의 곡률 차가 크지 않은 경우에는 경사대로 올라가면 최적값에 곧바로 빠르게 가까워집니다.
+
+
+
+<img src="/images/2025-01-20-Reinforcement_Algorithm_TRPO/image-20250122133847299.png" alt="image-20250122133847299" style="zoom:50%;" /><img src="/images/2025-01-20-Reinforcement_Algorithm_TRPO/image-20250122133758543.png" alt="image-20250122133758543" style="zoom:50%;" />
+
+그런데 이렇게 축 사이에 곡률 차가 큰 경우에는 경사대로 올라가면 최적값에 바로 다가가지 않게 됩니다. 경사만 따지면 빨간색 화살표 방향이 가장 크지만 실제로는 파란색 화살표를 따라 업데이트 되었을 때 더 빠르게 최적값에 도달합니다. 따라서 축 별로 휘어진 정도를 앞에 곱해줘서 파란색 화살표를 따라 업데이트 되도록 하는 것, 이것을 Natural Gradient라고 합니다.
+
+그런데 기존의 심층 강화학습에서는 이 Natural Gradient를 사용하는 경우가 없었습니다. Natural Gradient가 업데이트를 할 때는 정말 좋은데, 이걸 사용하기 위해서는 Hessian이 필요한데, Hessian을 계산하는 것은 정말 큰 계산량을 필요로하기 때문에 Natural Gradient가 사용되는 경우는 많지 않습니다. 그런데 TRPO에서는 어차피 근사시킨 최적화 식의 제약식 부분에서 Hessian이 필요하기 때문에 Hessian이 구해져 있습니다. 그래서 업데이트를 할 때 Hessian을 사용하는 NPG를 사용하게 되는 것입니다.
+
+
+
+NPG를 통해서 다음 파라미터를 구한다면, 아래의 업데이트 식을 따르게 됩니다.
+
+
+$$
+\theta = \theta_{old} + \beta \cdot H^{-1}\cdot g(gradient)
+$$
+
+
+위 식에서 $\beta$는 업데이트의 step size인데, 이렇게 업데이트를 할 때 최적화 식의 제약식 조건에 위배되는지를 확인해야합니다.
+
+
+$$
+\frac{1}{2}(\theta - \theta_{old})^TH(\theta - \theta_{old}) \leq \delta
+$$
+
+$$
+\frac{1}{2}(\beta\cdot H^{-1}\cdot g)^TH(\beta\cdot H^{-1}\cdot g)  \leq \delta
+$$
+
+
+
+위 식에서 $\beta$값이 최대가 되려면 우항과 좌항의 크기가 동일하면 됩니다. 그랬을 때의 $\beta$값은 아래와 같습니다.
+
+
+$$
+\beta = \sqrt{\frac{2\delta}{g^T H^{-1}g}}
+$$
+
+$$
+\theta = \theta_{old} + \sqrt{\frac{2\delta}{g^T H^{-1}g}} \cdot H^{-1}\cdot g(gradient)
+$$
+
+
+
+위의 식을 사용해서 업데이트를 하면 되긴 하는데, $H^{-1}$를 구하는게 여간 어려운 일이 아닙니다. 그런데 위 식을 살펴보면 $H^{-1}g$가 제곱근 안팎에서 동일하게 사용됩니다. 따라서 $H^{-1}g$을 한 번에 구하는 방향으로 생각해 보겠습니다.
+
+
+$$
+x = H^{-1}g
+$$
+
+$$
+Hx = g
+$$
+
+
+
+$H^{-1}g$를 구한다는 말은 $Hx = g$의 해를 구한다는 말과 동일합니다. 그리고 $Hx = g$는 Quadratic 함수이기 때문에 일반적인 경사하강법으로 구할 수 있습니다. 그런데, 여기서는 특별히 $H$가 Positive-Definite 행렬이기 때문에 **Conjugate Gradient**를 사용할 수 있습니다. Conjugate Gradient는 Gradient Descent보다 좀 더 적은 iteration 안에 해를 구할 수 있는 최적화 도구입니다. 비록 구현은 훨씬 복잡하긴 하지만 아무튼 TRPO에서는 이 Conjugate Gradient를 사용합니다.
+
+
+
+이어서 **Line Search**라는 기법을 사용합니다. 여기까지 오는 과정에서 굉장히 많은 근사가 있었습니다. 때문에 위 식을 통해 구해진 $\beta$값이 정말 최대의 신뢰 구역인지 정확하게 알기 어렵습니다. 실제로 실험을 해보면 신뢰구간을 벗어나서 알고리즘의 성능이 훅 떨어지는 경우가 발생합니다. 이런 문제점을 극복하기 위해서 아래와 같이 0과 1 사이의 상수, $\alpha$를 곱해줍니다.
+
+
+$$
+\beta \rightarrow \alpha\beta 
+\space\space\space\space\space  \space\space\space\space\space
+(0\lt\alpha \lt1)
+$$
+
+
+0과 1 사이의 상수를 곱해줘서 신뢰 구역을 줄여주면 학습의 속도가 조금 줄어드는 대신에 안전한 학습을 이어갈 수 있습니다.
 
 
 
@@ -492,9 +597,17 @@ $$
 
 
 
+## 알고리즘
+
+<img src="/images/2025-01-20-Reinforcement_Algorithm_TRPO/image-20250122141012398.png" alt="image-20250122141012398" style="zoom:50%;" />
+
+최종적인 TRPO 알고리즘 유사코드입니다. 먼저 정책 파라미터를 초기화하고 반복문을 돌게 됩니다. 반복문을 돌 때마다 새로운 정책을 얻게 되고, 이 과정을 반복해서 최적 정책에 도달하게 될 것입니다.
+
+먼저 현재 정책에서 여러 궤적들을 수집합니다. 그리고 어떤 것이든 추정 알고리즘을 사용해서 Advantage(또는 Q)를 계산합니다. 이어서 Gradient와 Natural Gradient를 계산합니다. 이 값들을 이용해서 $\beta$값을 구해주고 Line Search까지 적용해 다음 정책을 구해줍니다.
 
 
 
+TRPO는 신뢰 구역이라는 개념을 사용하면서 당시 상당한 성능을 보여준 알고리즘인데요, 몇 가지 단점들이 있습니다. TRPO는 1차 최적화가 아닌 2차 최적화를 사용하는데 이 방식은 Sample Efficiency가 다소 낮습니다. 그리고 Hessian 행렬을 구하는 것 자체에 굉장히 많은 컴퓨팅 자원이 필요합니다. 따라서 파라미터 수를 늘리는데 상당한 부담이 있습니다. 때문에 Deep CNNs나 RNNs에 적용하기 어렵다는 문제점이 있습니다.
 
 
 
