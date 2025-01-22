@@ -123,7 +123,6 @@ $$
 
 $$
 L_{\pi_{old}}(\pi)= \eta(\pi_{old}) + \sum_s\rho_{\pi_{old}}(s)\sum_a\pi(a|s)
-
 A_{\pi_{old}}(s, a)
 $$
 
@@ -277,7 +276,7 @@ $$
 
 
 
-위의 두 식을 비교를 해보겠습니다. $\eta(\theta) \geq L_{\theta_{old}}(\theta) - CD^{max}_{KL}(\theta_{old}, \theta)$ 에서 $\theta$를 찾으면, 그건 바로 최적 정책이 될 텐데요, 아래의 $\max_{\theta}[L_{\theta_{old}}({\theta}) - CD_{KL}^{max}(\theta_{old}, \theta)]$ 라는 식에서 구한 $\theta$는 그저 다음 정책에 불과합니다. 이 과정을 계속 반복해야 위의 최적 정책을 얻을 수 있는데, 여기에서 꽤나 많은 계산량을 필요로합니다. 그리고 $C$값은 $\gamma$값이 커질 때 같이 커집니다. 그런 경우에 굉장히 작은 보폭으로 최적화가 일어나기 때문에 시간이 많이 소요됩니다.
+위의 두 식을 비교를 해보겠습니다. 첫 번째 식에서 $\theta$를 찾으면, 그건 바로 최적 정책이 될 텐데요, 아래의 두 번째 식에서 구한 $\theta$는 그저 다음 정책에 불과합니다. 이 과정을 계속 반복해야 위의 최적 정책을 얻을 수 있는데, 여기에서 꽤나 많은 계산량을 필요로합니다. 그리고 $C$값은 $\gamma$값이 커질 때 같이 커집니다. 그런 경우에 굉장히 작은 보폭으로 최적화가 일어나기 때문에 시간이 많이 소요됩니다.
 
 
 
@@ -287,9 +286,125 @@ $$
 
 ## Trust Region Constraint
 
+위의 MM 알고리즘에서 사용한 $\max_{\theta}[L_{\theta_{old}}({\theta}) - CD_{KL}^{max}(\theta_{old}, \theta)]$ 식을 아래와 같이 변형하겠습니다.
+
+
+$$
+\max_{\theta} L_{\theta_{old}}(\theta) \space\space\space   subject \space to \space \space\space  D^{max}_{KL}(\theta_{old}, \theta) \leq \delta
+$$
+
+
+위와 같이 변형한 식을 **KL Constrained Objective**라고 부릅니다. 원래 식에서는 $C$값에 의해 가능한 step의 크기가 결정되었는데, 여기에서는 $\delta$값을 통해 그 크기가 결정됩니다. 두 식은 최적화의 방식만 다를 뿐, 수학적으로 동일한 해에 도달하게 됩니다. 그런데 위 식에서 $\delta$값을 찾는 것도 쉬운 일이 아닌데요, 아래에서 살펴봅니다.
+
+
+$$
+D^{max}_{KL}(\theta_{old}, \theta) 
+= \max_sD_{KL}(\pi_{old}(\cdot | s) || \pi(\cdot | s))
+\leq \delta
+$$
+
+
+위의 식을 만족하는 $\delta$를 찾아야 하는데, 상태의 개수는 너무나도 많습니다. 심지어는 연속적인 상태인 경우도 있기 때문에 모든 상태에서 만족하는 $\delta$를 찾는 일은 정말 어려운 일입니다. 애초에 샘플 데이터를 사용하기 때문에 거의 불가능한 일입니다. 이런 문제를 해결하기 위해서 휴리스틱을 사용하는데요, 바로 다음 장에서 설명합니다.
 
 
 
+
+
+
+
+## Heuristic Approximation
+
+
+$$
+\max_{\theta} L_{\theta_{old}}(\theta) \space\space\space   subject \space to \space \space\space  D^{max}_{KL}(\theta_{old}, \theta) \leq \delta
+$$
+
+$$
+\max_{\theta} L_{\theta_{old}}(\theta) \space\space\space   subject \space to \space \space\space  
+E_{s\sim\rho_{\theta_{old}}}[D_{KL}(\pi_{old}(\cdot | s) || \pi(\cdot | s))] \leq \delta
+$$
+
+
+
+모든 상태 중 최댓값이 찾는게 아니라 위의 두 번째 식과 같이 평균만 $\delta$보다 작으면 되도록 합니다. 이렇게 식을 변형하면 샘플로 대체할 수 있게 됩니다. 이어서 Monte Carlo Simulation을 어떻게 사용하는지 설명합니다.
+
+
+
+
+
+
+
+## Monte Carlo Simulation
+
+
+$$
+L_{\pi_{old}}(\pi)= \eta(\pi_{old}) + \sum_s\rho_{\pi_{old}}(s)\sum_a\pi(a|s)
+A_{\pi_{old}}(s, a)
+$$
+
+$$
+\max_{\theta} \sum_s\rho_{\pi_{old}}(s)\sum_a\pi_{\theta}(a|s)
+A_{\pi_{old}}(s, a)
+\space\space\space   subject \space to \space \space\space  
+E_{s\sim\rho_{\theta_{old}}}[D_{KL}(\pi_{old}(\cdot | s) || \pi(\cdot | s))] \leq \delta
+$$
+
+
+
+위의 두 번재 식은 $L$을 첫 번째 식의 관계로 대체해 수정한 식입니다. $\eta(\pi_{old})$ 부분이 빠져있는데, 최댓값을 찾을 때는 상수 부분은 영향을 미치지 않기 때문에 제거한 것입니다. 뒤의 제약식은 샘플링으로 평균을 내면 되니까 문제가 되지 않는데, 앞의 목적함수 부분이 여전히 계산하기 어렵습니다. 따라서 아래와 같이 목적함수의 구성 요소들을 대체합니다.
+
+
+
+- $$
+  \sum_s\rho_{\theta_{old}}(s) \rightarrow \frac{1}{1-\gamma}E_{s\sim \rho_{\theta_{old}}} \rightarrow E_{s\sim \rho_{\theta_{old}}}
+  $$
+
+  - 상태 방문 빈도 함수가 확률이 될 수 있도록 $1-\gamma$를 곱하고 나눠 변형합니다.
+
+- $$
+  A_{\theta_{old}} \rightarrow Q_{\theta_{old}}
+  $$
+
+  - Advantage 함수 안에 숨어있는 상태 가치 함수는 어차피 상수이기 때문에 $\max$ 내에서는 있으나 없으나 동일하므로 제거합니다.
+
+- $$
+  \sum_a\pi_{\theta}(a|s)
+  A_{\theta_{old}}(s, a) \rightarrow 
+  E_{a\sim\pi_\theta}[A_{\theta_{old}}(s, a)] \rightarrow
+  E_{a\sim\pi_{\theta_{old}}}[\frac{\pi_\theta(a|s)}{\pi_{\theta_{old}}(a|s)}A_{\theta_{old}}(s, a)]
+  $$
+
+  - 다음 정책에서 샘플링할 수 없기 때문에 중요도 샘플링으로 식을 변형합니다.
+
+
+$$
+\max_{\theta} E_{s\sim \rho_{\theta_{old}}, a\sim\pi_{\theta_{old}}}[\frac{\pi_\theta(a|s)}{\pi_{\theta_{old}}(a|s)}Q_{\theta_{old}}(s, a)]
+\space\space\space   subject \space to \space \space\space  
+E_{s\sim\rho_{\theta_{old}}}[D_{KL}(\pi_{old}(\cdot | s) || \pi(\cdot | s))] \leq \delta
+$$
+
+
+결론적으로 위의 식을 얻게 됩니다. 식의 모든 구성이 현재 정책으로 이루어져있기 때문에 다음 정책을 어렵지 않게 계산할 수 있습니다. 실제로 MC를 사용한다면 아래의 과정을 거쳐 업데이트가 수행됩니다.
+
+1. MC를 사용해 상태-행동 쌍, 궤적이 수집되고 Q 값이 추정됩니다(현재 정책에 따른 궤적).
+2. 샘플이 적당히 수집되면 평균을 취해 목적 함수와 제약식의 값을 샘플들의 평균으로 추정합니다.
+3. **Natural Policy Gradient**를 통해 제약 최적화를 수행하고 **Line Search**로 백트래킹을 수행합니다.
+
+
+
+이런 과정들을 거쳐서 MC Simulation이 수행됩니다. **Natural Policy Gradient**는 우리에게 익숙한 adam같은 최적화 방법과 다른 2차 최적화 방법입니다. Natural Policy Gradient에서는 Conjugate Gradient를 사용하는데 아래에서 자세하게 살펴봅니다.
+
+
+
+
+
+
+
+
+
+
+
+ 
 
 
 
