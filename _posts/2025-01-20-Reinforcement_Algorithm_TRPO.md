@@ -276,7 +276,7 @@ $$
 
 
 
-위의 두 식을 비교를 해보겠습니다. 첫 번째 식에서 $\theta$를 찾으면, 그건 바로 최적 정책이 될 텐데요, 아래의 두 번째 식에서 구한 $\theta$는 그저 다음 정책에 불과합니다. 이 과정을 계속 반복해야 위의 최적 정책을 얻을 수 있는데, 여기에서 꽤나 많은 계산량을 필요로합니다. 그리고 $C$값은 $\gamma$값이 커질 때 같이 커집니다. 그런 경우에 굉장히 작은 보폭으로 최적화가 일어나기 때문에 시간이 많이 소요됩니다.
+위의 두 식을 비교를 해보겠습니다. 첫 번째 식에서 $\theta$를 찾으면, 그건 바로 최적 정책이 될 텐데요, 아래의 두 번째 식에서 구한 $\theta$는 그저 다음 정책에 불과합니다. 이 과정을 계속 반복해야 위의 최적 정책을 얻을 수 있는데, 여기에서 꽤나 많은 계산량을 필요로 합니다. 그리고 $C$값은 $\gamma$값이 커질 때 같이 커집니다. 그런 경우에 굉장히 작은 보폭으로 최적화가 일어나기 때문에 시간이 많이 소요됩니다.
 
 
 
@@ -294,7 +294,7 @@ $$
 $$
 
 
-위와 같이 변형한 식을 **KL Constrained Objective**라고 부릅니다. 원래 식에서는 $C$값에 의해 가능한 step의 크기가 결정되었는데, 여기에서는 $\delta$값을 통해 그 크기가 결정됩니다. 두 식은 최적화의 방식만 다를 뿐, 수학적으로 동일한 해에 도달하게 됩니다. 그런데 위 식에서 $\delta$값을 찾는 것도 쉬운 일이 아닌데요, 아래에서 살펴봅니다.
+위와 같이 변형한 식을 **KL Constrained Objective**라고 부릅니다. 원래 식에서는 $C$값에 의해 가능한 step의 크기가 결정되었는데, 여기에서는 $\delta$값을 통해 그 크기가 결정됩니다. 두 식은 최적화의 방식만 다를 뿐, 수학적으로 동일한 해에 도달하게 됩니다. 그런데 위 식에서 $\delta$값을 찾는 것도 쉬운 일이 아닙니다.
 
 
 $$
@@ -304,7 +304,7 @@ D^{max}_{KL}(\theta_{old}, \theta)
 $$
 
 
-위의 식을 만족하는 $\delta$를 찾아야 하는데, 상태의 개수는 너무나도 많습니다. 심지어는 연속적인 상태인 경우도 있기 때문에 모든 상태에서 만족하는 $\delta$를 찾는 일은 정말 어려운 일입니다. 애초에 샘플 데이터를 사용하기 때문에 거의 불가능한 일입니다. 이런 문제를 해결하기 위해서 휴리스틱을 사용하는데요, 바로 다음 장에서 설명합니다.
+위의 식을 만족하는 $\delta$를 찾아야 하는데, 상태의 개수는 너무나도 많습니다. 심지어는 연속적인 상태인 경우도 있기 때문에 모든 상태에서 만족하는 $\delta$를 찾는 일은 정말 어렵습니다. 애초에 샘플 데이터를 사용하기 때문에 거의 불가능한 일입니다. 이런 문제를 해결하기 위해서 휴리스틱을 사용합니다.
 
 
 
@@ -355,26 +355,37 @@ $$
 
 
 
-- $$
-  \sum_s\rho_{\theta_{old}}(s) \rightarrow \frac{1}{1-\gamma}E_{s\sim \rho_{\theta_{old}}} \rightarrow E_{s\sim \rho_{\theta_{old}}}
-  $$
 
-  - 상태 방문 빈도 함수가 확률이 될 수 있도록 $1-\gamma$를 곱하고 나눠 변형합니다.
+$$
+\sum_s\rho_{\theta_{old}}(s) \rightarrow \frac{1}{1-\gamma}E_{s\sim \rho_{\theta_{old}}} \rightarrow E_{s\sim \rho_{\theta_{old}}}
+$$
 
-- $$
-  A_{\theta_{old}} \rightarrow Q_{\theta_{old}}
-  $$
+- 상태 방문 빈도 함수가 확률이 될 수 있도록 $1-\gamma$를 곱하고 나눠 변형합니다.
 
-  - Advantage 함수 안에 숨어있는 상태 가치 함수는 어차피 상수이기 때문에 $\max$ 내에서는 있으나 없으나 동일하므로 제거합니다.
 
-- $$
-  \sum_a\pi_{\theta}(a|s)
-  A_{\theta_{old}}(s, a) \rightarrow 
-  E_{a\sim\pi_\theta}[A_{\theta_{old}}(s, a)] \rightarrow
-  E_{a\sim\pi_{\theta_{old}}}[\frac{\pi_\theta(a|s)}{\pi_{\theta_{old}}(a|s)}A_{\theta_{old}}(s, a)]
-  $$
 
-  - 다음 정책에서 샘플링할 수 없기 때문에 중요도 샘플링으로 식을 변형합니다.
+
+$$
+A_{\theta_{old}} \rightarrow Q_{\theta_{old}}
+$$
+
+- Advantage 함수 안에 숨어있는 상태 가치 함수는 어차피 상수이기 때문에 $\max$ 내에서는 있으나 없으나 동일하므로 제거합니다.
+
+
+
+
+$$
+\sum_a\pi_{\theta}(a|s)
+A_{\theta_{old}}(s, a) \rightarrow 
+E_{a\sim\pi_\theta}[A_{\theta_{old}}(s, a)] \rightarrow
+E_{a\sim\pi_{\theta_{old}}}[\frac{\pi_\theta(a|s)}{\pi_{\theta_{old}}(a|s)}A_{\theta_{old}}(s, a)]
+$$
+
+- 다음 정책에서 샘플링할 수 없기 때문에 중요도 샘플링으로 식을 변형합니다.
+
+
+
+
 
 
 $$
@@ -392,7 +403,116 @@ $$
 
 
 
-이런 과정들을 거쳐서 MC Simulation이 수행됩니다. **Natural Policy Gradient**는 우리에게 익숙한 adam같은 최적화 방법과 다른 2차 최적화 방법입니다. Natural Policy Gradient에서는 Conjugate Gradient를 사용하는데 아래에서 자세하게 살펴봅니다.
+이런 과정들을 거쳐서 MC Simulation이 수행됩니다. **Natural Policy Gradient**는 우리에게 익숙한 adam같은 최적화 방법과 다른 2차 최적화 방법입니다. Natural Policy Gradient을 사용할 때 성능을 더 좋게 하기 위해 Conjugate Gradient를 함께 사용하게 됩니다. 아래에서 자세하게 살펴봅니다.
+
+
+
+
+
+
+
+## Natural Policy Gradient (NPG)
+
+
+$$
+\max_{\theta} E_{s\sim \rho_{\theta_{old}}, a\sim\pi_{\theta_{old}}}[\frac{\pi_\theta(a|s)}{\pi_{\theta_{old}}(a|s)}Q_{\theta_{old}}(s, a)]
+\space\space\space   subject \space to \space \space\space  
+E_{s\sim\rho_{\theta_{old}}}[D_{KL}(\pi_{old}(\cdot | s) || \pi(\cdot | s))] \leq \delta
+$$
+
+$$
+\max_{\theta} L_{\theta_{old}}(\theta)
+\space\space\space   subject \space to \space \space\space  
+\bar D_{KL}(\theta_{old}||\theta)
+\leq \delta
+$$
+
+
+
+MC에서 길게 풀어쓴 목적함수 식을 다시 위와 같이 간단하게 표현했습니다. 위의 식을 테일러 급수를 사용해서 근사를 하는데, 목적함수는 1차로 근사하고, 뒤의 제약식은 2차로 근사하면 아래와 같습니다.
+
+> [!IMPORTANT]
+>
+> 목적함수와 제약식 모두 다 2차까지 테일러 근사를 수행합니다. 목적함수의 테일러 전개에서 상수항은 의미가 없기 때문에 날아가고($\max$에서 상수항은 영향이 없음), 2차항은 1차항에 비해서 영향력이 굉장히 미미하기 때문에 생략합니다. 제약식의 경우 상수항과 1차항이 모두 0으로 날아가기 때문에 2차항만 남게 됩니다.
+
+
+$$
+\max_{\theta} 
+\nabla_\theta L_{\theta_{old}}(\theta)|_{\theta=\theta_{old}}(\theta - \theta_{old})
+\space\space\space   subject \space to \space \space\space  
+\frac{1}{2}(\theta - \theta_{old})^TH(\theta - \theta_{old})
+\leq \delta
+$$
+
+$$
+H = \nabla^2_{\theta}\bar D_{KL}(\theta_{old}||\theta) = (\frac{\partial^2\bar D_{KL}(\theta_{old}||\theta)}{\partial\theta_i\partial\theta_j}|_{\theta = \theta_{old}})
+$$
+
+
+
+$H$는 **Hessian**이라고 해서 이차 기울기(2nd Order Gradient)를 의미하고, **Fisher Information Matrix**라고 부릅니다.
+
+
+$$
+\nabla_\theta f = 
+
+\begin{bmatrix}
+\frac{\partial f}{\partial \theta_1} \\
+\frac{\partial f}{\partial \theta_2} \\
+\vdots \\
+\frac{\partial f}{\partial \theta_n} \\
+\end{bmatrix}
+
+\space\space\space\space\space \space\space\space\space\space
+
+\nabla^2_\theta f = 
+
+\begin{bmatrix}
+\frac{\partial^2 f}{\partial \theta_i \partial \theta_j}
+\end{bmatrix}_{i, j}
+$$
+
+
+Gradient와 Hessian을 차례대로 나타낸건데, Hessian은 (n by n)의 크기를 가지는 행렬입니다. 때문에 Gradient에 비해서 필요한 계산량이 훨씬 많습니다.
+
+
+$$
+H = \nabla^2_{\theta}\bar D_{KL}(\theta_{old}||\theta) = (\frac{\partial^2\bar D_{KL}(\theta_{old}||\theta)}{\partial\theta_i\partial\theta_j}|_{\theta = \theta_{old}})
+$$
+
+$$
+H  \approx (\frac{1}{N}\sum_{n=1}^N\frac{\partial^2}{\partial\theta_i\partial\theta_j}D_{KL}(\pi_{old}(\cdot | s) || \pi(\cdot | s))|_{\theta = \theta_{old}})
+$$
+
+
+
+아무튼 실제로는 MC로 샘플링을 하고 있으니까 샘플들의 Hessian의 평균을 Fisher Information Matrix로 사용하게 됩니다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
