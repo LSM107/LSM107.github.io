@@ -277,7 +277,7 @@ $$
 
 
 
-위의 두 식을 비교를 해보겠습니다. $\eta(\theta) \geq L_{\theta_{old}}(\theta) - CD^{max}_{KL}(\theta_{old}, \theta)$에서 $\theta$를 찾으면, 그건 바로 최적 정책이 될 텐데요, 아래의 $\max_{\theta}[L_{\theta_{old}}({\theta}) - CD_{KL}^{max}(\theta_{old}, \theta)]$식에서 구한 $\theta$는 그저 다음 정책에 불과합니다. 이 과정을 계속 반복해야 위의 최적 정책을 얻을 수 있습니다. 여기에서 꽤나 많은 계산량을 필요로합니다. 그리고 $C$값은 $\gamma$값이 커질 때 같이 커지게 되는데요, 그런 경우에 굉장히 작은 보폭으로 최적화가 일어나기 때문에 시간이 많이 소요됩니다.
+위의 두 식을 비교를 해보겠습니다. $\eta(\theta) \geq L_{\theta_{old}}(\theta) - CD^{max}_{KL}(\theta_{old}, \theta)$ 에서 $\theta$를 찾으면, 그건 바로 최적 정책이 될 텐데요, 아래의 $\max_{\theta}[L_{\theta_{old}}({\theta}) - CD_{KL}^{max}(\theta_{old}, \theta)]$ 라는 식에서 구한 $\theta$는 그저 다음 정책에 불과합니다. 이 과정을 계속 반복해야 위의 최적 정책을 얻을 수 있는데, 여기에서 꽤나 많은 계산량을 필요로합니다. 그리고 $C$값은 $\gamma$값이 커질 때 같이 커집니다. 그런 경우에 굉장히 작은 보폭으로 최적화가 일어나기 때문에 시간이 많이 소요됩니다.
 
 
 
@@ -286,8 +286,6 @@ $$
 
 
 ## Trust Region Constraint
-
-
 
 
 
