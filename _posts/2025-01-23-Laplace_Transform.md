@@ -291,7 +291,7 @@ y'' + y = \sin(2t)
 $$
 
 $$
-\text{초기 조건: } y(0)=2, \space\space y'(0)=1
+\text{initial condition:  } y(0)=2, \space\space y'(0)=1
 $$
 
 
