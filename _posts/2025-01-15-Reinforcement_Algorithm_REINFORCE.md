@@ -88,7 +88,7 @@ J(\theta) \doteq v_{\pi_\theta}(s)
 $$
 
 
-이제 위 수식에 대해서 경사도를 구해야 하는데요, 경사도를 구해서 $\theta \leftarrow \theta + \alpha \nabla J(\theta)$ 라는 업데이트 식으로 파라미터를 수정합니다. 그런데 다행히도 $J(\theta)$의 경사도는 **정책 경사도 정리**에 의해 그 꼴이 간단하게 정리돼 있습니다.
+이제 위 수식에 대해서 경사도를 구해야 하는데요, 경사도를 구해서 $\theta \leftarrow \theta + \alpha \nabla J(\theta)$ 라는 업데이트 식(경사상승법)으로 파라미터를 수정합니다. 그런데 다행히도 $J(\theta)$의 경사도는 **정책 경사도 정리**에 의해 그 꼴이 간단하게 정리돼 있습니다.
 
 
 $$
@@ -114,8 +114,8 @@ $$
 \nabla J(\theta) \propto E_\pi[ \sum_a  q_\pi (S_t, a)\nabla \pi(a|S_t, \theta)]
 $$
 
-- $s$ 대신에 $S_t$가 들어갔는데요, 타임 스텝을 밟아갈 때 정책 $\pi$를 따르면서 상태들을 방문하기 때문에 다르게 표기합니다.
-- 이어서 로그 미분 트릭을 적용해서 식을 단순화합니다.
+- $s$ 대신에 $S_t$가 들어갔는데, 타임 스텝을 밟아갈 때 정책 $\pi$를 따르면서 상태들을 방문하기 때문입니다.
+- 이어서 로그 미분 트릭을 적용해 식을 단순화시킵니다.
 
 
 $$
@@ -128,7 +128,7 @@ $$
 
 
 
-위 식에서 $q$함수가 사용됐는데 REINFORCE 알고리즘은 다른 말로 **몬테카를로** 정책 경사 알고리즘이라고 합니다. 때문에 $q$함수 자리에 $G_t$를 사용합니다.
+위 식에서 $q$함수가 사용됐는데, **REINFORCE** 알고리즘은 다른 말로 **몬테카를로** 정책 경사 알고리즘입니다. 몬테카를로 방법론에서는 여러 번의 에피소드를 통해 얻은 이득값을 사용해 상태 함수를 근사합니다. 때문에 $q$함수 자리에 $G_t$를 사용합니다.
 
 
 $$
@@ -150,16 +150,16 @@ $$
 ### Baseline 적용
 
 $$
-\nabla J(\theta) \propto E_\pi[ \sum_a  q_\pi (S_t, a)\nabla \pi(a|S_t, \theta)]
+\nabla J(\theta) \propto E_\pi[ \sum_a  q_\pi (S_t, a)\nabla\log\pi(a|S_t, \theta)]
 $$
 
 
 
-위 식을 살펴봤을 때, 아래와 같은 변형을 해도 그 값이 동일합니다.
+위 식에서 아래와 같은 변형을 해도 괜찮습니다.
 
 
 $$
-\nabla J(\theta) \propto E_\pi[ \sum_a  (q_\pi (S_t, a) - b(s))\nabla \pi(a|S_t, \theta)]
+\nabla J(\theta) \propto E_\pi[ \sum_a  (q_\pi (S_t, a) - b(s))\nabla \log \pi(a|S_t, \theta)]
 $$
 
 
