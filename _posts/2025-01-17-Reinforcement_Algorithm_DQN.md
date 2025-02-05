@@ -28,7 +28,7 @@ use_math: true
 
 
 
-자료 출처: 단단한 강화학습, Reinforcement Learning An Introduction , 2nd edition. 리처드 서튼, 앤드류 바트로, 김성우(옮긴이)>, <https://github.com/seungeunrho/minimalRL>
+자료 출처: 단단한 강화학습, Reinforcement Learning An Introduction , 2nd edition. 리처드 서튼, 앤드류 바트로, 김성우(옮긴이)>, <https://github.com/seungeunrho/minimalRL>, EE488D: Introduction to Reinforcement Learning Spring 2023. Donghwan Lee. KAIST EE 
 
 
 
@@ -40,7 +40,7 @@ use_math: true
 
 # DQN
 
-**DQN(Deep Q Network)**은 Q-learning에서 Q함수를 테이블 형식이 아니라 NN을 사용해 성공적으로 학습시킨 첫 번째 알고리즘입니다. 사실 당시 DNN을 사용한 Q-learning은 굉장히 많이 시도되고 있었습니다. 하지만 대다수의 Deep Q-learning은 성공적이지 못했고, 그마저도 다양한 테스크에 적용하기는 어려운 모델들이 전부였습니다. Deepmind에서 공개한 DQN은 DNN을 Q-learning과 함께 사용할 때 발생하는 문제점들을 효과적으로 극복합니다.
+**DQN(Deep Q Network)**은 Q-learning에서 Q함수를 테이블 형식이 아니라 NN을 사용해 성공적으로 학습시킨 첫 번째 알고리즘입니다. 사실 당시에 이미 많은 사람들이 DNN을 사용한 Q-learning을 시도하고 있었습니다. 하지만 대다수의 Deep Q-learning은 성공적이지 못했고, 그마저도 다양한 테스크에 적용하기는 어려운 모델들이 전부였습니다. Deepmind에서 공개한 DQN은 DNN을 Q-learning과 함께 사용할 때 발생하는 문제점들을 효과적으로 극복합니다.
 
 
 
@@ -104,7 +104,7 @@ DQN에서는 데이터 사이의 연관성을 줄이기 위해 Replay Buffer를 
 
 ## Target Q Network
 
-이어서 DQN에서는 움직이는 목표 문제를 해결하기 위해서 고정된 Target Q Network를 사용합니다. 
+이어서 DQN에서는 움직이는 목표 문제를 해결하기 위해서 고정된 **Target Q Network**를 사용합니다. **Target Network**라는 아이디어는 Double Q-Learning에서 온 것인데, Double Q-Learning에서는 과추정 문제를 해결하기 위해서 2개의 Q함수를 사용합니다. DQN에서도 유사하게 Target값을 추정하는 네트워크와 행동을 선택하는 네트워크를 분리시킵니다. 
 
 
 $$
@@ -114,7 +114,7 @@ $$
 
 위 식은 TD-target을 계산하기 위한 식입니다. Q 네트워크가 학습할 때 위의 값이 계속 변하는게 문제가 되는건데요, 이 문제를 해결하기 위해 위의 TD-target을 계산하는 Q 네트워크를 별도로 선언합니다. 그렇게 따로 선언된 네트워크를 **Target Q Network**라고 부르는데, Target Q Network는 기본적으로 Q 네트워크와 동일한 파라미터 값을 가집니다. 그런데, 항상 동일한 파라미터를 가지는게 아니라, 조금 늦게 따라오도록 파라미터를 업데이트합니다.
 
-예를 들어서, Q 네트워크가 100번의 업데이트가 수행되었다면, Target Q Network는 50번에 한 번 씩 Q 네트워크와 파라미터를 동일하게 맞춰줍니다. 이런 식으로 Target Q Network를 업데이트하면 Q 네트워크의 목표 대상이 50회의 업데이트동안 고정된 상태를 유지하기 때문에 학습이 훨씬 안정적이게 됩니다.
+예를 들어서, Q 네트워크가 100번의 업데이트가 수행되었다면, Target Q Network는 50번에 한 번 씩 Q 네트워크와 파라미터를 동일하게 맞춰줍니다. 이런 식으로 Target Q Network를 업데이트하면 Q 네트워크의 목표 대상이 50회의 업데이트동안 고정된 상태를 유지하기 때문에 학습이 훨씬 안정적이게 됩니다. 
 
 
 
@@ -343,3 +343,81 @@ def train(q, q_target, memory, optimizer):
 
 
 ![dqn_cartpole](/images/2025-01-17-Reinforcement_Algorithm_DQN/dqn_cartpole.gif)
+
+
+
+
+
+
+
+
+
+# DQN with Dueling Architecture
+
+DQN with Dueling Architecture에서는 Q값을 추정하기 위해, V함수와 Advantage함수를 이용합니다. 
+
+
+$$
+Q_{\theta}(s, a) = V_\theta(s) + A_\theta(s, a)
+$$
+
+
+위 식에서 **V함수**는 **Long-term effect**를, **Advantage함수**는 '**당장 선택할 수 있는 행동들 중 무엇이 가장 가치있는가?**'를 의미합니다. 두 부분을 분리했을 때 보다 안정적으로 학습할 수 있습니다. 그런데 위의 식을 그대로 사용하기는 조금 어렵습니다. 우리가 식을 만들 때에는 V함수가 가치 함수로 학습되고 Advantage함수가 Advantage가 학습되도록 바라고 만들었지만, 실제로도 그렇게 학습되리라는 보장은 없습니다. 동일한 값을 더하고 빼주어도 어차피 Q함수는 변하지 않기 때문에 우리가 원하는 대로 학습이 되지 않을 가능성이 높습니다. 이를 해결하기 위해서 아래와 같이 기준점을 잡아줍니다.
+
+
+$$
+Q_{\theta}(s, a) = V_\theta(s) + A_\theta(s, a) - \max_uA_{\theta}(s, u)
+$$
+
+
+위와 같이 Advantage 중 최댓값을 제하면 Advantage 값의 최댓값은 0으로 고정됩니다. 따라서 신경망이 학습될 때 의미적으로 보다 분명하게 분리할 수 있습니다. 위 식에서 Q함수와 V함수, 그리고 A함수까지 최적에 도달했을 때에도 등식이 성립하기 때문에 그대로 사용하기에 문제가 없습니다. 실제로는 보다 안정적인 학습을 위해 아래와 같이 최댓값을 대신해 평균값을 제합니다.
+
+
+$$
+Q_{\theta}(s, a) = V_\theta(s) + A_\theta(s, a) - \frac{1}{|A|}\sum_{u \in A}A_{\theta}(s, u)
+$$
+
+
+위의 수식이 바로 DQN with Dueling Architecture에서 Q값을 구하는 수식입니다. Q함수를 추정하는 방식에 관한 것이기 때문에 다른 방법론과 결합해서 사용할 수 있는데, Double Deep Q-Learning과 함께 Deuling Architecture를 사용하는 알고리즘을 **D3QN**이라고 부릅니다.
+
+
+
+
+
+
+
+## 파이썬 코드
+
+```python
+class DDQN(torch.nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.fc = torch.nn.Linear(4, 64)
+    self.fcV1 = torch.nn.Linear(64, 64)
+    self.fcA1 = torch.nn.Linear(64, 64)
+    self.fcV2 = torch.nn.Linear(64, 1)
+    self.fcA2 = torch.nn.Linear(64, 2)
+    
+  def forward(self, x):
+    x = self.fc(x)
+    x = torch.nn.functional.relu(x)
+    
+    V = self.fcV1(x)
+    V = torch.nn.functional.relu(V)
+    V = self.fcV2(V)
+    
+    A = self.fcA1(x)
+    A = torch.nn.functional.relu(A)
+    A = self.fcA2(A)
+    
+    return V + A - A.mean(dim=-1, deepdims=True) # Dueling Architecture
+```
+
+코드를 보면 Advantage함수의 평균값을 빼주는 부분을 가장 마지막 줄에서 확인할 수 있습니다. 
+
+
+
+
+
+
+
