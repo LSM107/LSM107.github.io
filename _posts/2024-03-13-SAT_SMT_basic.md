@@ -22,7 +22,7 @@ use_math: true
 
 
 
-**글에 들어가기 앞서...**
+
 
 이 포스팅은 Coursera 강의, '**Automated Reasoning: Satisfiablity**'의 SAT, SMT 튜토리얼입니다.
 

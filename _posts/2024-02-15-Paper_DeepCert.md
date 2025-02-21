@@ -22,7 +22,7 @@ use_math: true
 
 
 
-**글에 들어가기 앞서...**
+
 
 이 포스팅은 '***DeepCert: Verification of Contextually Relevant Robustness for Neural Network Image Classifiers***' 논문에 대한 소개를 담고 있습니다.
 

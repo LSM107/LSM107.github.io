@@ -23,7 +23,7 @@ published: True
 
 
 
-**글에 들어가기 앞서...**
+
 
 이 포스팅은 '**강화학습 알고리즘**'에 대한 내용을 담고 있습니다.
 
@@ -310,7 +310,6 @@ PPO를 CartPole-V1환경에 사용한 파이썬 예시 코드입니다. 학습 �
 
 
 ![ppo_cartpole](/images/2025-01-22-Reinforcement_Algorithm_PPO/ppo_cartpole.gif)
-
 
 
 
