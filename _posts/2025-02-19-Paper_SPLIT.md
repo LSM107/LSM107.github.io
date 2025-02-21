@@ -111,7 +111,7 @@ $$
 
 <img src="https://blog.kakaocdn.net/dn/6gkAi/btsge6cduQo/jNbjcW1g6dbSPuYc9VPkP0/img.gif" alt="img" style="zoom:50%;" />
 
-- <https://dlaiml.tistory.com/entry/Score-based-Generative-Models과-Diffusion-Probabilistic-Models과의-관계>
+- <https://yang-song.net/blog/2021/score/>
 
 
 
