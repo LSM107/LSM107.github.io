@@ -5,7 +5,7 @@ title:  "A Reachability Tree-Based Algorithm for Robot Task and Motion Planning"
 
 categories: Paper
 
-tag: [Robotics, Collision, MPC, Control]
+tag: [Robotics, Planning]
 
 typora-root-url: ../
 
