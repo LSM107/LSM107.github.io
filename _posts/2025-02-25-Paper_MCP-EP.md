@@ -127,7 +127,16 @@ $$
 \hat{W} = \begin{bmatrix} \hat{\tau}_{\text{ext}} \\ \hat{W}_{\text{ext},b} \end{bmatrix} \in \mathbb{R}^{n+6}
 $$
 
-센서를 통해 얻게되는 정보는 베이스 센서에서 6개, 그리고 n개 개별 조인트에서 1개씩, 총 n + 6의 차원을 가지게 됩니다. 그리고 접촉한 위치만 알 뿐이지, 무슨 방향으로 힘이 가해지고 있는지는 모릅니다. 접촉 위치가 주어지는 상황에서 힘의 방향으로 가능한 구역들이 있는데, 이를 [**마찰 원뿔(Friction Cone)**](https://lsm107.github.io/paper/Paper_CDM/#optimization-based-contact-point-localization)이라고 말합니다.
+센서를 통해 얻게되는 정보는 베이스 센서에서 6개, 그리고 n개 개별 조인트에서 1개씩, 총 n + 6의 차원을 가지게 됩니다. 그리고 접촉한 위치만 주어지고 무슨 방향으로 힘이 가해지고 있는지 역시 맞춰야 하는 대상이 됩니다. 접촉 위치가 주어질 때 꾸준히 힘이 가해질 수 있는 방향의 범위는 물리적으로 한정됩니다. 이를 [**마찰 원뿔(Friction Cone)**](https://lsm107.github.io/paper/Paper_CDM/#optimization-based-contact-point-localization)이라고 말합니다.
+
+
+$$
+\min_{r_c,\,F_c} \left\| \hat{W} - \sum_{i=1}^{k} \begin{bmatrix} J_i^T(q, r_{c,i}) \\ X_{c,i}(r_{c,i}) \end{bmatrix} F_{c,i} \right\|^2
+$$
+
+$$
+\text{subject to} \quad r_{c, t} \in \mathcal{S}, \quad F_{c, i} \in \mathcal{F}(r_{c, i}), \quad \forall i \in \{1, 2, ..., k\}
+$$
 
 
 
