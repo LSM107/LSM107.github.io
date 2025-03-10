@@ -73,6 +73,8 @@ LAS-MP가 어떻게 6자유도의 광범위한 모션에도 불구하고 플랫�
 ### Variable Notation
 
 <img src="/images/2025-03-06-Paper_LAS-MP/image-20250310135553453.png" alt="image-20250310135553453" style="zoom:50%;" />
+
+
 $$
 p^{\mathcal{W}}_{\langle \cdot \rangle,[\cdot]} \in \mathbb{R}^3 \text{ : position}
 $$
