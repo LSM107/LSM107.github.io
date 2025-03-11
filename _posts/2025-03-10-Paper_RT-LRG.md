@@ -163,7 +163,6 @@ $$
 
 $$
 e^\text{pos}_{ i} = 2 \cdot \cos^{-1}\Bigl( \Bigl| \langle x^\text{quat}_{ i},\, \hat{x}^\text{quat}_{ i}(q_i) \rangle \Bigr| \Bigr)
-\tag{5}
 $$
 
 $$
