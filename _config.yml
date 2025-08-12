@@ -19,7 +19,7 @@ locale                   : "ko-KR"
 title                    : "LSM107"
 title_separator          : "|"
 subtitle                 : "강화학습 공부중..."
-name                     : "임승민"
+name                     : "이창호"
 description              : "..."
 url                      : "https://LSM107.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
@@ -104,9 +104,9 @@ analytics:
 
 # Site Author
 author:
-  name             : "임승민"
+  name             : "이창호"
   avatar           : 
-  bio              : "서울시립대학교 인공지능학과 4학년 학부생입니다."
+  bio              : "서울시립대학교 대학생"
   location         : "서울시립대학교"
   email            : "rsm1021902@gmail.com"
   links:
